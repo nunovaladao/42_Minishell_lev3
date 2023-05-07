@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 09:12:57 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/07 22:35:14 by nsoares-         ###   ########.fr       */
+/*   Created: 2023/05/07 22:31:20 by nsoares-          #+#    #+#             */
+/*   Updated: 2023/05/07 22:36:30 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int main(int ac, char **av)
+void	sig_handler(int signal)
 {
-    t_shell cmd;
+	if (signal == SIGINT)
+	{
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+	}
+}
 
-    init(ac, av);
-
-    while (1)
-    {
-        signals();
-        show_prompt(&cmd); //fazer verificações;
-        //working_history();
-    }
-    
-    return (0);
+void signals()
+{
+    signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
 }

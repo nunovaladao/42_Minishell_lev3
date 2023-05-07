@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 09:12:57 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/07 22:35:14 by nsoares-         ###   ########.fr       */
+/*   Created: 2023/05/05 19:28:59 by nsoares-          #+#    #+#             */
+/*   Updated: 2023/05/06 21:57:19 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int main(int ac, char **av)
+void init(int ac, char **av)
 {
-    t_shell cmd;
+    (void)ac;
+    (void)av;
 
-    init(ac, av);
-
-    while (1)
-    {
-        signals();
-        show_prompt(&cmd); //fazer verificações;
-        //working_history();
-    }
     
-    return (0);
 }

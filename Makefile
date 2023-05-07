@@ -6,18 +6,21 @@
 #    By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/27 17:52:53 by nsoares-          #+#    #+#              #
-#    Updated: 2023/05/04 09:15:10 by nsoares-         ###   ########.fr        #
+#    Updated: 2023/05/07 23:14:08 by nsoares-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -g0
 LIBFT = ./libft/libft.a
 RM = rm -rf
 
-SRC = main.c 
+SRC = main.c \
+			src/prompt.c \
+			src/init.c \
+			src/signal.c \
 				
 
 OBJS_FILES = $(SRC:.c=.o)
@@ -45,7 +48,7 @@ all: compilation_start $(NAME)
 
 $(NAME): $(OBJS_FILES)
 	$(MAKE) --no-print-directory -C ./libft
-	$(CC) $(SRC) $(LIBFT) $(CFLAGS) -o $(NAME)
+	$(CC) $(SRC) $(LIBFT) $(CFLAGS) -o $(NAME) -lreadline
 	@ $(MINISHELL_READY)
 
 compilation_start:
