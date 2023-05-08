@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nuno <nuno@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:57:00 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/08 13:48:32 by nuno             ###   ########.fr       */
+/*   Updated: 2023/05/08 16:04:00 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,13 @@ char *show_prompt()
     char *str;
     
     line = readline("minishell$ ");
-    if (line == NULL)
+    if (!line)
+    {
+        printf("exit\n");
+        free(line);
+        exit(0);
+    }
+    if (ft_strcmp(line, "exit") == 0)
     {
         printf("exit\n");
         exit(0);
