@@ -3,25 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nuno <nuno@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:57:00 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/07 22:30:11 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/08 13:48:32 by nuno             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char show_prompt(t_shell *cmd)
+char *show_prompt()
 {
-    cmd->line = readline("minishell$ ");
-    cmd->str = ft_strtrim(cmd->line, " \t");
+    char *line;
+    char *str;
     
-    if (cmd->str == NULL)
+    line = readline("minishell$ ");
+    if (line == NULL)
     {
-        free(cmd->str);
-        cmd->str = NULL;
+        printf("exit\n");
+        exit(0);
     }
-    free(cmd->line);
-    return (*cmd->str);
+    str = ft_strtrim(line, " \t");
+    if (*str == '\0')
+    {
+        free(str);
+        str = NULL;
+    }
+    free(line);
+    return (str);
 }

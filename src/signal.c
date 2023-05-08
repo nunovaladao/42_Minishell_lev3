@@ -3,27 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nuno <nuno@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 22:31:20 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/07 22:36:30 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/08 12:15:55 by nuno             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	sig_handler(int signal)
+void	signal_handler(int sig)
 {
-	if (signal == SIGINT)
+	if (sig == SIGINT)
 	{
-		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		write(STDOUT_FILENO, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
+		rl_redisplay();
 	}
 }
 
 void signals()
 {
-    signal(SIGINT, sig_handler);
+    signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 }

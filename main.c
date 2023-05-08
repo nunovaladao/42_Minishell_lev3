@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nuno <nuno@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:12:57 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/07 22:35:14 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/08 13:40:53 by nuno             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 int main(int ac, char **av)
 {
-    t_shell cmd;
-
+    char *cmd_line;
+    
     init(ac, av);
-
     while (1)
     {
         signals();
-        show_prompt(&cmd); //fazer verificações;
-        //working_history();
+        cmd_line = show_prompt();
+        add_history(cmd_line);
     }
-    
     return (0);
 }
