@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   clear.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 09:12:57 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/09 13:22:50 by nsoares-         ###   ########.fr       */
+/*   Created: 2023/05/09 13:05:40 by nsoares-          #+#    #+#             */
+/*   Updated: 2023/05/09 13:49:39 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
-int main(int ac, char **av)
+void clear_screen()
 {
-    t_shell shell;
-    t_cmds cmds;
-    
-    init(ac, av);
-    while (1)
-    {
-        signals();
-        shell.cmd_line = show_prompt();
-        if (shell.cmd_line != NULL)
-        {
-            add_history(shell.cmd_line);
-            cmds.cmd_line = ft_split(shell.cmd_line, ' ');
-            builtins(&cmds);
-        }
-    }
-    return (0);
+    const char* CLEAR_SCREEN_ANSI;
+    CLEAR_SCREEN_ANSI = "\e[1;1H\e[2J";
+    write(STDOUT_FILENO, CLEAR_SCREEN_ANSI, 12);
+    printf("\r");
 }

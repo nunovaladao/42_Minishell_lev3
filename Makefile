@@ -6,7 +6,7 @@
 #    By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/27 17:52:53 by nsoares-          #+#    #+#              #
-#    Updated: 2023/05/07 23:14:08 by nsoares-         ###   ########.fr        #
+#    Updated: 2023/05/09 14:08:49 by nsoares-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,19 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -g0
 LIBFT = ./libft/libft.a
 RM = rm -rf
+CPPFLAGS=-I/usr/local/opt/readline/include
+LDFLAGS=-L/usr/local/opt/readline/lib
 
 SRC = main.c \
 			src/prompt.c \
 			src/init.c \
 			src/signal.c \
+			src/builtins/echo.c \
+			src/builtins/builtins.c \
+			src/builtins/clear.c \
+			src/builtins/pwd.c \
+			src/builtins/cd.c \
+			
 				
 
 OBJS_FILES = $(SRC:.c=.o)
@@ -48,7 +56,7 @@ all: compilation_start $(NAME)
 
 $(NAME): $(OBJS_FILES)
 	$(MAKE) --no-print-directory -C ./libft
-	$(CC) $(SRC) $(LIBFT) $(CFLAGS) -o $(NAME) -lreadline
+	$(CC) $(SRC) $(LIBFT) $(CFLAGS) $(LDFLAGS) $(CPPFLAGS) -o $(NAME) -lreadline
 	@ $(MINISHELL_READY)
 
 compilation_start:

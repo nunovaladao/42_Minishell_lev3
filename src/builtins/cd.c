@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 09:12:57 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/09 13:22:50 by nsoares-         ###   ########.fr       */
+/*   Created: 2023/05/09 14:07:46 by nsoares-          #+#    #+#             */
+/*   Updated: 2023/05/09 15:34:15 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
-int main(int ac, char **av)
+int built_cd(t_cmds *cmds)
 {
-    t_shell shell;
-    t_cmds cmds;
-    
-    init(ac, av);
-    while (1)
-    {
-        signals();
-        shell.cmd_line = show_prompt();
-        if (shell.cmd_line != NULL)
-        {
-            add_history(shell.cmd_line);
-            cmds.cmd_line = ft_split(shell.cmd_line, ' ');
-            builtins(&cmds);
-        }
-    }
-    return (0);
+    cmds->new_dir = cmds->cmd_line[1];
+
+    if (cmds->new_dir == NULL)
+        cmds->new_dir = getenv("HOME");
+    chdir(cmds->new_dir);
+    return 0;
 }

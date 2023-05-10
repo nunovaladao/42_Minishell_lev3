@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 09:12:57 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/09 13:22:50 by nsoares-         ###   ########.fr       */
+/*   Created: 2023/05/08 20:57:50 by nsoares-          #+#    #+#             */
+/*   Updated: 2023/05/09 12:48:57 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
-int main(int ac, char **av)
+int built_echo(t_cmds *cmds)
 {
-    t_shell shell;
-    t_cmds cmds;
-    
-    init(ac, av);
-    while (1)
+    int i;
+    int n_flag;
+
+    n_flag = 0;
+    i = 1;
+    while (cmds->cmd_line[i] != NULL && ft_strcmp(cmds->cmd_line[i], "-n") == 0) 
     {
-        signals();
-        shell.cmd_line = show_prompt();
-        if (shell.cmd_line != NULL)
-        {
-            add_history(shell.cmd_line);
-            cmds.cmd_line = ft_split(shell.cmd_line, ' ');
-            builtins(&cmds);
-        }
+        n_flag = 1;
+        i++;
     }
-    return (0);
+    while (cmds->cmd_line[i] != NULL) 
+    {
+        printf("%s ", cmds->cmd_line[i]);
+        i++;
+    }
+    if (n_flag == 0)
+        printf("\n");
+    return 0;
 }
