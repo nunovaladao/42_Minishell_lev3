@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 23:36:22 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/10 14:34:08 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/10 15:38:18 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int builtins(t_cmds *cmds)
     else if (ft_strcmp(cmds->cmd_line[0], "pwd") == 0)
         built_pwd();
     else if (ft_strcmp(cmds->cmd_line[0], "exit") == 0)
-        built_exit();
+        built_exit(cmds);
     else
         return (-1);
     return (0);

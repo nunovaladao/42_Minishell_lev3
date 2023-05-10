@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:12:18 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/10 14:31:50 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/10 15:38:30 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef struct s_cmds
 {
 	char **cmd_line;
 	char *new_dir;
-	char *clear_sequence;
 }				t_cmds;
 
 typedef struct s_shell
@@ -43,7 +42,7 @@ int builtins(t_cmds *cmds);
 int built_echo(t_cmds *cmds);
 int built_pwd();
 int built_cd(t_cmds *cmds);
-void built_exit();
+void built_exit(t_cmds *cmds);
 void clear_screen();
 
 
