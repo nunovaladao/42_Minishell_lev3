@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:12:18 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/10 15:38:30 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/10 20:59:09 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int built_cd(t_cmds *cmds);
 void built_exit(t_cmds *cmds);
 void clear_screen();
 
-
+// Utils
+int nb_of_args(t_cmds *cmds);
 
 #endif

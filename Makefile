@@ -6,7 +6,7 @@
 #    By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/27 17:52:53 by nsoares-          #+#    #+#              #
-#    Updated: 2023/05/10 14:32:14 by nsoares-         ###   ########.fr        #
+#    Updated: 2023/05/10 21:00:38 by nsoares-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,14 @@ SRC = main.c \
 			src/prompt.c \
 			src/init.c \
 			src/signal.c \
+			src/utils.c \
 			src/builtins/echo.c \
 			src/builtins/builtins.c \
 			src/builtins/clear.c \
 			src/builtins/pwd.c \
 			src/builtins/cd.c \
 			src/builtins/exit.c \
+
 			
 
 OBJS_FILES = $(SRC:.c=.o)

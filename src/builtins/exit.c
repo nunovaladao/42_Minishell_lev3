@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 13:24:09 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/10 16:00:43 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/10 21:15:44 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ int args_numbers(char *str)
     i = 0;
     while (str[i])
     {
-        if (str[i] == '1')
-        {
-            puts("1");
+        if (str[i] == '-' || str[i] == '+')
+            i++;
+        if (!ft_isdigit(str[i]))
             return (1);
-        }
         i++;
     }
     return (0);
@@ -31,11 +30,17 @@ int args_numbers(char *str)
 
 void built_exit(t_cmds *cmds)
 {
-    if (args_numbers(cmds->cmd_line[1]) == 1)
-    {
-        printf("Comand not found");
-        exit(1);
-    }
+    int nb_args;
+    
+    nb_args = nb_of_args(cmds);
     printf("exit\n");
+    if (nb_args == 2)
+    {
+        if (args_numbers(cmds->cmd_line[1]) == 1)
+        {
+            printf("bash: exit: %s: numeric argument required\n", cmds->cmd_line[1]);
+            exit(1);
+        }
+    }
     exit(0);
 }
