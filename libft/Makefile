@@ -29,7 +29,7 @@ SRC = ft_isascii.c ft_isprint.c ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_cmp_nu
 		    ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c \
 		    print_char.c print_hex.c print_int.c print_ptr.c ft_utoa.c\
 			print_str.c print_unsigned.c ft_printf.c ft_gnl_strjoin.c ft_gnl_strchr.c \
-			get_next_line.c solve_errors.c 
+			get_next_line.c solve_errors.c ft_split_new.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -46,4 +46,4 @@ fclean: clean
 		
 re:	fclean	$(NAME)
 
-.SILENT: 
+.SILENT:  

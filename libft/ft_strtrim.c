@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+/* char	*ft_strtrim1(char const *s1, char const *set)
 {
 	int		st;
 	int		end;
@@ -33,9 +33,29 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (NULL);
 	ft_strlcpy(str, &s1[st], end - st + 2);
 	return (str);
+} */
+
+/*alterada*/
+char *ft_strtrim(char const *s1, char const *set)
+{
+    size_t start;
+	size_t end;
+	char *trimmed;
+
+	start = 0;
+	end = ft_strlen(s1);
+    while (start <= end && ft_strchr(set, s1[start]))
+		start++;
+    while (end > start && ft_strchr(set, s1[end - 1]))
+		end--;
+    trimmed = (char *)malloc(end - start + 1);
+    if (!trimmed) 
+		return (NULL);
+    ft_strlcpy(trimmed, (s1 + start), (end - start + 1));
+    return (trimmed);
 }
 
 /*int	main(void)
 {
-	printf("%s", ft_strtrim("HelloHe", "Hel"));
+	printf("%s\n", ft_strtrim("HelloHe", "Hel"));
 }*/

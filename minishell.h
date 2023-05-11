@@ -6,10 +6,9 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:12:18 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/10 20:59:09 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/11 23:35:20 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -47,5 +46,6 @@ void clear_screen();
 
 // Utils
 int nb_of_args(t_cmds *cmds);
+int args_numbers(char *str);
 
 #endif

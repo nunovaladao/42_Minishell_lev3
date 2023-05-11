@@ -32,7 +32,6 @@ SRC = main.c \
 			src/builtins/exit.c \
 
 			
-
 OBJS_FILES = $(SRC:.c=.o)
 
 # __________COLORS____________
@@ -57,7 +56,7 @@ RE          =   echo "\n$(BOLD_YELLOW)Re: $(NO_COLOR)Compilation restarted \n"
 all: compilation_start $(NAME)
 
 $(NAME): $(OBJS_FILES)
-	$(MAKE) --no-print-directory -C ./libft
+	@ $(MAKE) --no-print-directory -C ./libft
 	$(CC) $(SRC) $(LIBFT) $(CFLAGS) $(LDFLAGS) $(CPPFLAGS) -o $(NAME) -lreadline
 	@ $(MINISHELL_READY)
 

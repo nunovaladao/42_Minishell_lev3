@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 13:24:09 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/10 21:15:44 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/11 23:42:07 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ void built_exit(t_cmds *cmds)
     
     nb_args = nb_of_args(cmds);
     printf("exit\n");
-    if (nb_args == 2)
+    if (nb_args == 2 || nb_args == 3)
     {
         if (args_numbers(cmds->cmd_line[1]) == 1)
         {
             printf("bash: exit: %s: numeric argument required\n", cmds->cmd_line[1]);
             exit(1);
         }
-    }
+    }    
     exit(0);
 }

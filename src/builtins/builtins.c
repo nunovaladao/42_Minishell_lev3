@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 23:36:22 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/10 15:38:18 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/11 23:41:00 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,15 @@ int builtins(t_cmds *cmds)
     else if (ft_strcmp(cmds->cmd_line[0], "pwd") == 0)
         built_pwd();
     else if (ft_strcmp(cmds->cmd_line[0], "exit") == 0)
+    {
+        if (nb_of_args(cmds) > 2 && args_numbers(cmds->cmd_line[1]) == 0)
+        {
+            printf("bash: exit: too many arguments\n");
+            return (0);
+        }
         built_exit(cmds);
+    }
     else
-        return (-1);
+        printf("bash: %s: command not found\n", cmds->cmd_line[0]);
     return (0);
 }

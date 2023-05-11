@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:12:57 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/09 13:22:50 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/11 23:22:13 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int main(int ac, char **av)
         if (shell.cmd_line != NULL)
         {
             add_history(shell.cmd_line);
-            cmds.cmd_line = ft_split(shell.cmd_line, ' ');
+            cmds.cmd_line = ft_split_new(shell.cmd_line, ' ');
             builtins(&cmds);
         }
     }
