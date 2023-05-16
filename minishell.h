@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:12:18 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/15 20:12:25 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/16 13:55:38 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-/*falta remove e add envp*/
+extern int g_ex_status;
 
 typedef struct s_token
 {
@@ -56,7 +56,7 @@ int builtins(t_cmds *cmds, t_shell *shell);
 int built_echo(t_cmds *cmds);
 int built_pwd();
 int built_cd(t_cmds *cmds);
-void built_exit(t_cmds *cmds);
+int built_exit(t_cmds *cmds);
 int built_env(t_shell *shell);
 int built_export(t_shell *shell ,t_cmds *cmds);
 int built_unset(t_cmds *cmds, t_shell *shell);

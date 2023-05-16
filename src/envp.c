@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:38 by nmoreira          #+#    #+#             */
-/*   Updated: 2023/05/15 20:17:17 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:48:45 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int put_var_env(t_cmds *cmds, t_shell *shell)
 		free(shell->envp[pos]);
 		shell->envp[pos] = ft_strjoin(cmds->var, ft_strjoin("=", cmds->value));
 	}
-	return 0;
+	return (0);
 }
 
 void remv_var_env(char *var, t_shell *shell)

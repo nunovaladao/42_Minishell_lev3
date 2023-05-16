@@ -6,11 +6,13 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:12:57 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/12 18:44:52 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/16 13:54:36 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int g_ex_status;
 
 int main(int ac, char **av, char **env)
 {

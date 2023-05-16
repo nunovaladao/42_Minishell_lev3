@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:18:20 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/15 19:20:54 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:47:23 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ int built_export(t_shell *shell ,t_cmds *cmds)
             i++;
         }
     }
-    return (0);
+    return (g_ex_status = 0);
 }
