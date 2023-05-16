@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 09:12:57 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/12 18:44:52 by nsoares-         ###   ########.fr       */
+/*   Created: 2023/05/12 18:01:09 by nsoares-          #+#    #+#             */
+/*   Updated: 2023/05/15 11:12:08 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
-int main(int ac, char **av, char **env)
+int built_env(t_shell *shell)
 {
-    t_shell shell;
-    t_cmds cmds;
-    
-    init(ac, av, env, &shell);
-    while (1)
-    {
-        signals();
-        shell.cmd_line = show_prompt();
-        if (shell.cmd_line != NULL)
-        {
-            add_history(shell.cmd_line);
-            cmds.cmd_line = ft_split_new(shell.cmd_line, ' ');
-            builtins(&cmds, &shell);
-        }
-    }
+    int i;
+
+    i = 0;
+    if (!*shell->envp)
+        return (0);
+    while (shell->envp[i] && ft_strchr(shell->envp[i], '='))
+        printf("%s\n", shell->envp[i++]);
     return (0);
 }

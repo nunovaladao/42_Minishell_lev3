@@ -23,13 +23,18 @@ SRC = main.c \
 			src/prompt.c \
 			src/init.c \
 			src/signal.c \
-			src/utils.c \
+			src/envp.c \
+			src/utils/utils.c \
+			src/utils/mtr_util.c \
 			src/builtins/echo.c \
 			src/builtins/builtins.c \
 			src/builtins/clear.c \
 			src/builtins/pwd.c \
 			src/builtins/cd.c \
 			src/builtins/exit.c \
+			src/builtins/env.c \
+			src/builtins/export.c \
+			src/builtins/unset.c \
 
 			
 OBJS_FILES = $(SRC:.c=.o)

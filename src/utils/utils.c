@@ -1,23 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/05 19:28:59 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/12 14:51:09 by nsoares-         ###   ########.fr       */
+/*   Created: 2023/05/10 20:55:12 by nsoares-          #+#    #+#             */
+/*   Updated: 2023/05/15 11:37:10 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-void init(int ac, char **av, char **envp, t_shell *sh)
+int nb_of_args(t_cmds *cmds)
 {
-    (void)ac;
-    (void)av;
-    sh->cmd_line = NULL;
-	sh->cmds = NULL;
-	sh->envp = mtr_dup(envp);
-	sh->pid = 0;
+    int i;
+
+    i = 0;
+    while (cmds->cmd_line[i] != NULL)
+        i++;
+    return (i);
+}
+
+int	pos_char(char *str, char c)
+{
+	int	i;
+
+	if (!str)
+		return (-1);
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == c)
+			return (i);
+	}
+	if (c == '\0')
+		return (i);
+	return (-1);
 }
