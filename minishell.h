@@ -6,10 +6,9 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:12:18 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/17 12:59:52 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/17 15:30:38 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -90,5 +89,7 @@ void node_type(t_shell *sh, char c);
 void	print_list(t_shell *sh);
 void	*node(t_shell *sh, char *word);
 
+// Errors
 int error_quotes(char erro);
+
 #endif

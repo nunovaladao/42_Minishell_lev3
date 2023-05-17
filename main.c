@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int  g_ex_status = 0;
+int  g_ex_status;
 
 /*Podem existir mais condições de erro*/
 int operators(t_shell *sh)
@@ -43,7 +43,6 @@ int main(int ac, char **av, char **envp)
     t_shell shell;
     t_cmds cmds;
     
-    
     init(ac, av, envp, &shell);
     while (1)
     {
@@ -53,16 +52,11 @@ int main(int ac, char **av, char **envp)
             continue ;
         add_history(shell.cmd_line);
         //if (div_input(&shell))
-            //falta o erro ou exit
+            // falta o erro ou exit
         //if (operators(&shell))
             // falta erro ou exit
-        
-        // if (shell.cmd_line != NULL)
-        // {
-        //     add_history(shell.cmd_line);
         cmds.cmd_line = ft_split(shell.cmd_line, ' ');
         builtins(&cmds, &shell);
-        // }
     }
     return (0);
 }
