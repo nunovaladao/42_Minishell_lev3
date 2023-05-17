@@ -12,27 +12,6 @@
 
 #include "../../minishell.h"
 
-void echo_env(t_shell *shell, t_cmds *cmds)
-{
-    int i = 0;
-    int pos;
-
-    while (cmds->cmd_line[++i])
-    {
-        if (pos_char(cmds->cmd_line[i], '$') == 0)
-        {
-            char *var_name = cmds->cmd_line[i] + 1; // Ignorar o caractere '$'
-            pos = pos_envp(var_name, shell->envp);
-            if (pos >= 0)
-            {
-                char *value = ft_strchr(shell->envp[pos], '='); // Encontrar o caractere '='
-                if (value != NULL)
-                    printf("%s ", value + 1); // Imprimir a parte após o caractere '='
-            }
-        }  
-    }
-}
-
 int built_echo(t_cmds *cmds)
 {
     int i;

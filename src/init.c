@@ -6,19 +6,28 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 19:28:59 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/16 13:56:24 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/10 11:01:01 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void init(int ac, char **av, char **envp, t_shell *sh)
+extern int g_ex_status;
+
+void init(int ac, char **av, char **envp, t_shell *shell)
 {
     (void)ac;
     (void)av;
-    g_ex_status = 0;
-    sh->cmd_line = NULL;
-	sh->cmds = NULL;
-	sh->envp = mtr_dup(envp);
-	sh->pid = 0;
+	g_ex_status = 0;
+	shell->i = 0;
+	shell->wd_lim = 0;
+	shell->dquotes = 0;
+	shell->squotes = 0;
+    shell->cmd_line = NULL;
+	shell->cmds = NULL;
+	shell->head_token = NULL;
+	shell->envp = mtr_dup(envp);
+	if (!(shell->envp))
+		exit(g_ex_status = 1);
+	shell->pid = 0;
 }
