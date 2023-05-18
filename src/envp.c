@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:38 by nmoreira          #+#    #+#             */
-/*   Updated: 2023/05/17 13:26:05 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/18 19:16:00 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,35 +33,35 @@ int pos_envp(char *var, char **envp)
 }
 
 /*se não existir = o strchr devolve nulo - não valor da var envp*/
-char *get_env(char *var, char **envp)
+char *get_env(char *var, t_shell *shell)
 {
 	int i;
 	int len;
 
-	i = pos_envp(var, envp);
-	if (i < 0 || !ft_strchr(envp[i], '='))
+	i = pos_envp(var, shell->envp);
+	if (i < 0 || !ft_strchr(shell->envp[i], '='))
 		return (NULL);
-	len = ft_strlen(var);
-	return (ft_strchr(envp[i] + len + 1, '='));
+	len = ft_strlen(var) + 1;
+	return (ft_strdup(shell->envp[i] + len));
 }
 
-int put_var_env(t_cmds *cmds, t_shell *shell)
+int put_var_env(char *var, char *value, t_shell *shell)
 {
 	int pos;
 
-	pos = pos_envp(cmds->var, shell->envp);
-	if (cmds->value == NULL)
+	pos = pos_envp(var, shell->envp);
+	if (value == NULL)
 	{
 		if (pos < 0)
-			shell->envp = mtr_addnew(cmds->var, shell->envp);
+			shell->envp = mtr_addnew(var, shell->envp);
 		return 0;
 	}
 	if (pos < 0)
-		shell->envp = mtr_addnew(ft_strjoin(cmds->var, ft_strjoin("=", cmds->value)), shell->envp);
+		shell->envp = mtr_addnew(ft_strjoin(var, ft_strjoin("=", value)), shell->envp);
 	else
 	{
 		free(shell->envp[pos]);
-		shell->envp[pos] = ft_strjoin(cmds->var, ft_strjoin("=", cmds->value));
+		shell->envp[pos] = ft_strjoin(var, ft_strjoin("=", value));
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:18:20 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/16 15:47:23 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/18 20:00:50 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int built_export(t_shell *shell ,t_cmds *cmds)
 {
+    char *var;
+    char *value;
     int i;
     int j;
 
@@ -27,14 +29,27 @@ int built_export(t_shell *shell ,t_cmds *cmds)
         {
             j = pos_char(cmds->cmd_line[i], '=');
             if (j <= 0)
-                return (1); // retornar erro escrito!
-            cmds->var = ft_substr(cmds->cmd_line[i], 0, j);
-			cmds->value = ft_strdup(cmds->cmd_line[i] + (j + 1));
-			put_var_env(cmds, shell);
-			free(cmds->var);
-			free(cmds->value);
+                return (error_export(shell, cmds->cmd_line[i]));
+            var = ft_substr(cmds->cmd_line[i], 0, j);
+			value = ft_strdup(cmds->cmd_line[i] + (j + 1));
+			put_var_env(var, value, shell);
+			free(var);
+			free(value);
             i++;
         }
     }
+    return (g_ex_status = 0);
+}
+
+int error_export(t_shell *shell, char *var)
+{
+    if (pos_char(var, '=') == -1)
+    {
+        printf("minishell: ");
+        printf("export: `%s", var);
+        printf("': not a valid identifier\n");
+        return (g_ex_status = 1);
+    }
+    put_var_env(var, NULL, shell);
     return (g_ex_status = 0);
 }

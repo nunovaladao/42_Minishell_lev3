@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:12:18 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/17 15:30:38 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/18 19:57:41 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ typedef struct s_token
 typedef struct s_cmds
 {
 	char **cmd_line;
-	char *new_dir;
-	char	*var;
-	char	*value;
+	char *pwd;
+	char *oldpwd;
 	struct s_cmds *next;
 }				t_cmds;
 
@@ -60,7 +59,7 @@ void signals();
 int builtins(t_cmds *cmds, t_shell *shell);
 int built_echo(t_cmds *cmds);
 int built_pwd();
-int built_cd(t_cmds *cmds);
+int built_cd(t_cmds *cmds, t_shell *shell);
 int built_exit(t_cmds *cmds);
 int built_env(t_shell *shell);
 int built_export(t_shell *shell ,t_cmds *cmds);
@@ -68,7 +67,8 @@ int built_unset(t_cmds *cmds, t_shell *shell);
 void clear_screen();
 
 // Env
-int put_var_env(t_cmds *cmds, t_shell *shell);
+char *get_env(char *var, t_shell *shell);
+int put_var_env(char *var, char *value, t_shell *shell);
 int pos_envp(char *var, char **envp);
 void remv_var_env(char *var, t_shell *shell);
 
@@ -91,5 +91,6 @@ void	*node(t_shell *sh, char *word);
 
 // Errors
 int error_quotes(char erro);
+int error_export(t_shell *shell, char *var);
 
 #endif
