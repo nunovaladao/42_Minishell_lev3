@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:12:18 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/18 19:57:41 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/19 14:48:06 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,11 @@ void mtr_free(char **matriz);
 char **mtr_addnew(char *str, char **matrizold);
 char **mtr_rmv(int pos, char **matrizold);
 
+// Utils export
+void print_export(t_shell *shell, t_cmds *cmds);
+bool valid_identifier(char *var);
+int error_export(t_shell *shell, char *var);
+
 // Utils list
 void node_type(t_shell *sh, char c);
 void	print_list(t_shell *sh);
@@ -91,6 +96,6 @@ void	*node(t_shell *sh, char *word);
 
 // Errors
 int error_quotes(char erro);
-int error_export(t_shell *shell, char *var);
+
 
 #endif
