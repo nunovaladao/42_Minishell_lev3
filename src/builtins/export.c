@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:18:20 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/19 13:43:52 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:09:12 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,17 @@ bool valid_identifier(char *var)
 {
     int i;
 
-    if (!isalpha(var[0]) && var[0] != '_') 
-        return (false); // Não começa com uma letra
+    if (!isalpha(var[0]) && var[0] != '_')
+        return false; // Não começa com uma letra
     i = 1;
     while (var[i]) 
     {
-        if (!isalnum(var[i]) && var[i] != '=') 
-            return (false); // Contém caracteres inválidos
-        if (ft_strchr(&var[i], '='))
-            break ;
+        if (!isalnum(var[i]) && var[i] != '_' && var[i] != '=') 
+            return false; // Contém caracteres inválidos
+        if (var[i] == '=')
+            break;
         i++;
     }
-    return (true);
+    return true;
 }
+
