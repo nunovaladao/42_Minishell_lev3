@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:12:18 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/19 15:14:52 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/19 19:39:12 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,20 @@ int built_export(t_shell *shell ,t_cmds *cmds);
 int built_unset(t_cmds *cmds, t_shell *shell);
 void clear_screen();
 
+// Lexer
+int check_input(t_shell *shell);
+int div_input(t_shell *shell);
+void lexer_word(t_shell *shell);
+void lexer_op(t_shell *shell);
+int is_operator(char c);
+int operators(t_shell *shell);
+int check_quotes(t_shell *shell);
+
 // Env
 char *get_env(char *var, t_shell *shell);
 int put_var_env(char *var, char *value, t_shell *shell);
 int pos_envp(char *var, char **envp);
 void remv_var_env(char *var, t_shell *shell);
-
-// Utils
-int nb_of_args(t_cmds *cmds);
-int	pos_char(char *str, char c);
-int args_numbers(char *str);
 
 // Utils Env
 char **mtr_dup(char **matriz);
@@ -83,6 +87,11 @@ int mtr_len(char **matriz);
 void mtr_free(char **matriz);
 char **mtr_addnew(char *str, char **matrizold);
 char **mtr_rmv(int pos, char **matrizold);
+
+// Utils
+int nb_of_args(t_cmds *cmds);
+int	pos_char(char *str, char c);
+int args_numbers(char *str);
 
 // Utils export
 void print_export(t_shell *shell, t_cmds *cmds);
@@ -95,6 +104,6 @@ void	print_list(t_shell *sh);
 void	*node(t_shell *sh, char *word);
 
 // Errors
-int error_quotes(char erro);
+int error_quotes(char error);
 
 #endif

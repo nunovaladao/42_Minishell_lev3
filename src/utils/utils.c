@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 20:55:12 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/17 10:22:35 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/19 19:31:49 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,13 @@ int	pos_char(char *str, char c)
 	if (c == '\0')
 		return (i);
 	return (-1);
+}
+
+int error_quotes(char error)
+{
+	if (error == '\'')
+		write(1, "minishell: unexpected error while looking for matching quotes \'\n", 65);	
+	if (error == '\"')
+		write(1, "minishell: unexpected error while looking for matching quotes \"\n", 65);
+	return (0);
 }
