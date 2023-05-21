@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+// Data: 21/05/23 Hora: 16h
+// Atualizado: adicionei a função cd_back que reproduz o comando "cd -".
+
 #include "minishell.h"
 
 int  g_ex_status;
