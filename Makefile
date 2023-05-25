@@ -26,7 +26,7 @@ CPPFLAGS=-I/usr/local/opt/readline/include
 LDFLAGS=-L/usr/local/opt/readline/lib
 
 SRC = main.c prompt.c init.c signal.c utils.c echo.c builtins.c clear.c pwd.c cd.c exit.c envp.c mtr_util.c export.c unset.c env.c ft_lst_utils.c \
-	  error.c input.c 
+		input.c operators.c 
 
 
 # OBJS_FILES = $(SRC:.c=.o)
@@ -74,6 +74,9 @@ $(OBJ_DIR)/%.o: src/utils/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR)/%.o: src/builtins/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/%.o: src/lexer/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 compilation_start:
