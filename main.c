@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// Data: 21/05/23 Hora: 16h
-// Atualizado: adicionei a função cd_back que reproduz o comando "cd -".
+// Data: 07/06/23 Hora: 15h
+// Atualizado: melhoramento na built-in (cd) e adicionamento dos redirects.
 
 #include "minishell.h"
 
@@ -33,9 +33,9 @@ int main(int ac, char **av, char **envp)
         //if (check_input(&shell) == 0)
             // exec
         cmds.cmd_line = ft_split(shell.cmd_line, ' ');
-        //check_redir(&cmds);
+        check_redir(&cmds);
         builtins(&cmds, &shell);
-        //exec_cmd_line(&shell, &cmds);
+        exec_cmd_line(&shell, &cmds);
     }
     return (0);
 }
