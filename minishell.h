@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:12:18 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/30 11:32:06 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:40:44 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int built_exit(t_cmds *cmds);
 int built_env(t_shell *shell);
 int built_export(t_shell *shell ,t_cmds *cmds);
 int built_unset(t_cmds *cmds, t_shell *shell);
-void clear_screen();
+
 
 // Lexer
 int check_input(t_shell *shell);

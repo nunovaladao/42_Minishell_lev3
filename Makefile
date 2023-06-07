@@ -25,7 +25,7 @@ RM = rm -rf
 CPPFLAGS=-I/usr/local/opt/readline/include
 LDFLAGS=-L/usr/local/opt/readline/lib
 
-SRC = main.c prompt.c init.c signal.c utils.c echo.c builtins.c clear.c pwd.c cd.c exit.c envp.c mtr_util.c export.c unset.c env.c ft_lst_utils.c \
+SRC = main.c prompt.c init.c signal.c utils.c echo.c builtins.c pwd.c cd.c exit.c envp.c mtr_util.c export.c unset.c env.c ft_lst_utils.c \
 		input.c operators.c redirections.c exec.c path.c
 
 
