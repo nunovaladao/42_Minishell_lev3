@@ -33,7 +33,9 @@ int main(int ac, char **av, char **envp)
         //if (check_input(&shell) == 0)
             // exec
         cmds.cmd_line = ft_split(shell.cmd_line, ' ');
+        //check_redir(&cmds);
         builtins(&cmds, &shell);
+        //exec_cmd_line(&shell, &cmds);
     }
     return (0);
 }

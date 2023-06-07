@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:12:18 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/19 19:39:12 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:32:06 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_token
 typedef struct s_cmds
 {
 	char **cmd_line;
+	char *path;
 	char *pwd;
 	char *oldpwd;
 	struct s_cmds *next;
@@ -75,11 +76,20 @@ int is_operator(char c);
 int operators(t_shell *shell);
 int check_quotes(t_shell *shell);
 
+// Exec
+char *search_path(t_shell *shell, t_cmds *cmds);
+char **get_paths(t_shell *shell);
+char *find_executable(char **paths, const char *command);
+int exec_cmd_line(t_shell *shell, t_cmds *cmds);
+
 // Env
 char *get_env(char *var, t_shell *shell);
 int put_var_env(char *var, char *value, t_shell *shell);
 int pos_envp(char *var, char **envp);
 void remv_var_env(char *var, t_shell *shell);
+
+// Redirections
+int check_redir(t_cmds *cmds);
 
 // Utils Env
 char **mtr_dup(char **matriz);
