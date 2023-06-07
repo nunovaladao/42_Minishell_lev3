@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 23:36:22 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/18 16:26:51 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:33:46 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int builtins(t_cmds *cmds, t_shell *shell)
 {
     if (ft_strcmp(cmds->cmd_line[0], "echo") == 0)
         built_echo(cmds);
-    else if (ft_strcmp(cmds->cmd_line[0], "x") == 0)
-        clear_screen();
     else if (ft_strcmp(cmds->cmd_line[0], "cd") == 0)
         built_cd(cmds, shell);
     else if (ft_strcmp(cmds->cmd_line[0], "pwd") == 0)
