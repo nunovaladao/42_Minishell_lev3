@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 20:55:12 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/19 19:31:49 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/17 10:22:35 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,24 @@ int	pos_char(char *str, char c)
 	return (-1);
 }
 
-int error_quotes(char error)
+void put_var_env_from_cmd(char *cmd, t_shell *shell)
 {
-	if (error == '\'')
-		write(1, "minishell: unexpected error while looking for matching quotes \'\n", 65);	
-	if (error == '\"')
-		write(1, "minishell: unexpected error while looking for matching quotes \"\n", 65);
-	return (0);
+    char *var;
+    char *value;
+    char *equals;
+
+    equals = ft_strchr(cmd, '=');
+    if (equals)
+    {
+        var = ft_substr(cmd, 0, equals - cmd);
+        value = ft_strdup(equals + 1);
+    }
+    else
+    {
+        var = ft_strdup(cmd);
+        value = NULL;
+    }
+    put_var_env(var, value, shell);
+    free(var);
+    free(value);
 }

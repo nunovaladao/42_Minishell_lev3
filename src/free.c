@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmoreira <nmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/07 22:31:20 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/16 13:56:55 by nsoares-         ###   ########.fr       */
+/*   Created: 2023/06/10 03:38:31 by nmoreira          #+#    #+#             */
+/*   Updated: 2023/06/10 03:38:31 by nmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	signal_handler(int sig)
+void	free_all(t_shell *sh)
 {
-	if (sig == SIGINT)
-	{
-		g_ex_status = 130;
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
-
-void signals()
-{
-    signal(SIGINT, signal_handler);
-	signal(SIGQUIT, SIG_IGN);
+	if (!sh)
+		return ;
+	mtr_free(sh->envp);
+	free_listtoken(sh->head_token);
+	free_listcmds(sh->cmds);
+    sh->cmds = NULL;
+    sh->head_token = NULL;
+	sh = NULL;
 }

@@ -18,9 +18,12 @@ void init(int ac, char **av, char **envp, t_shell *shell)
 {
     (void)ac;
     (void)av;
-	g_ex_status = 0;
 	shell->i = 0;
+	shell->pid = 0;
+	shell->proc = 0;
+	shell->fork = 0;
 	shell->wd_lim = 0;
+	shell->pipeOp = 0;
 	shell->dquotes = 0;
 	shell->squotes = 0;
     shell->cmd_line = NULL;

@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:38 by nmoreira          #+#    #+#             */
-/*   Updated: 2023/05/18 19:16:00 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/05/17 13:26:05 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,14 @@ int pos_envp(char *var, char **envp)
 	return (-1);
 }
 
-/*se não existir = o strchr devolve nulo - não valor da var envp*/
-char *get_env(char *var, t_shell *shell)
+char	*get_env(char *var, t_shell *sh) // pensar usar este
 {
-	int i;
-	int len;
+	int	pos;
 
-	i = pos_envp(var, shell->envp);
-	if (i < 0 || !ft_strchr(shell->envp[i], '='))
+	pos = pos_envp(var, sh->envp);
+	if (pos < 0 || !ft_strchr(sh->envp[pos], '='))
 		return (NULL);
-	len = ft_strlen(var) + 1;
-	return (ft_strdup(shell->envp[i] + len));
+	return (ft_strdup(sh->envp[pos] + (ft_strlen(var) + 1)));
 }
 
 int put_var_env(char *var, char *value, t_shell *shell)

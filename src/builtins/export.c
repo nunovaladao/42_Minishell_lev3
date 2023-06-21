@@ -6,49 +6,28 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:18:20 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/19 16:09:12 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/06/20 23:08:43 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int built_export(t_shell *shell ,t_cmds *cmds)
+bool valid_identifier(char *var) 
 {
-    char *var;
-    char *value;
     int i;
-    int j;
 
+    if (!isalpha(var[0]) && var[0] != '_')
+        return false;
     i = 1;
-    print_export(shell, cmds);
-    if (nb_of_args(cmds) > 1)
+    while (var[i]) 
     {
-        while (i < nb_of_args(cmds))
-        {
-            if (valid_identifier(cmds->cmd_line[i]) == false)
-                return (error_export(shell, cmds->cmd_line[i]));
-            j = pos_char(cmds->cmd_line[i], '=');
-            if (j <= 0)
-                return (error_export(shell, cmds->cmd_line[i]));
-            var = ft_substr(cmds->cmd_line[i], 0, j);
-			value = ft_strdup(cmds->cmd_line[i] + (j + 1));
-			put_var_env(var, value, shell);
-			free(var);
-			free(value);
-            i++;
-        }
+        if (!isalnum(var[i]) && var[i] != '_' && var[i] != '=') 
+            return false;
+        if (var[i] == '=')
+            break;
+        i++;
     }
-    return (g_ex_status = 0);
-}
-
-void print_export(t_shell *shell, t_cmds *cmds)
-{
-    int i;
-
-    i = 0;
-    if (nb_of_args(cmds) == 1)
-        while (shell->envp[i] && ft_strchr(shell->envp[i], '='))
-            printf("declare -x %s\n", shell->envp[i++]);
+    return true;
 }
 
 int error_export(t_shell *shell, char *var)
@@ -64,21 +43,50 @@ int error_export(t_shell *shell, char *var)
     return (g_ex_status = 0);
 }
 
-bool valid_identifier(char *var) 
+void print_export(t_shell *shell)
+{
+    char *env_value;
+    char **env;
+    int i;
+    int j;
+
+    i = -1;
+    env = mtr_dup(shell->envp);
+    while (env[++i])
+    {
+        printf("declare -x ");
+        env_value = ft_strchr(env[i], '=');
+        j = 0;
+        while (env[i][j] && env[i][j] != '=')
+            printf("%c", env[i][j++]);
+        if (env_value)
+        {
+            printf("=");
+            printf("\"%s\"", env_value + 1);
+        }
+        printf("\n");
+    }
+}
+
+int put_var_and_values(t_cmds *cmds, t_shell *shell)
 {
     int i;
 
-    if (!isalpha(var[0]) && var[0] != '_')
-        return false; // Não começa com uma letra
-    i = 1;
-    while (var[i]) 
+    i = 0;
+    while (++i < nb_of_args(cmds))
     {
-        if (!isalnum(var[i]) && var[i] != '_' && var[i] != '=') 
-            return false; // Contém caracteres inválidos
-        if (var[i] == '=')
-            break;
-        i++;
+        if (valid_identifier(cmds->cmd_line[i]) == false)
+            return (error_export(shell, cmds->cmd_line[i]));
+        put_var_env_from_cmd(cmds->cmd_line[i], shell);
     }
-    return true;
+    return (g_ex_status = 0);
 }
 
+int built_export(t_shell *shell ,t_cmds *cmds)
+{
+    if (nb_of_args(cmds) > 1)
+        put_var_and_values(cmds, shell);
+    else
+        print_export(shell);
+    return (g_ex_status = 0);
+}

@@ -14,7 +14,7 @@
 
 extern int g_ex_status;
 
-char *show_prompt()
+char *show_prompt(t_shell *sh)
 {
     char *line;
     char *str;
@@ -24,11 +24,12 @@ char *show_prompt()
     {
         printf("exit\n");
         clear_history();
+        free_all(sh);
         free(line);
-        exit(g_ex_status = 0);
+        exit(0);
     }
     str = ft_strtrim(line, " \t");
-    if (*str == '\0')
+    if (str[0] == '\0')
     {
         free(str);
         str = NULL;
