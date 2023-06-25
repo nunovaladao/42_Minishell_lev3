@@ -12,21 +12,21 @@
 
 #include "../minishell.h"
 
-extern int g_ex_status;
+extern int	g_ex_status;
 
-void init(int ac, char **av, char **envp, t_shell *shell)
+void	init(int ac, char **av, char **envp, t_shell *shell)
 {
-    (void)ac;
-    (void)av;
+	(void)ac;
+	(void)av;
 	shell->i = 0;
 	shell->pid = 0;
 	shell->proc = 0;
 	shell->fork = 0;
 	shell->wd_lim = 0;
-	shell->pipeOp = 0;
+	shell->pipeop = 0;
 	shell->dquotes = 0;
 	shell->squotes = 0;
-    shell->cmd_line = NULL;
+	shell->cmd_line = NULL;
 	shell->cmds = NULL;
 	shell->head_token = NULL;
 	shell->envp = mtr_dup(envp);

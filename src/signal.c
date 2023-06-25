@@ -24,8 +24,8 @@ static void	signal_handler(int sig)
 	}
 }
 
-void signals()
+void	signals(void)
 {
-    signal(SIGINT, signal_handler);
+	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 }

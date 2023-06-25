@@ -12,19 +12,20 @@
 
 #include "../minishell.h"
 
-extern int g_ex_status;
+extern int	g_ex_status;
 
-int error_quotes(char erro)
+int	error_quotes(char erro)
 {
 	if (erro == '\'')
-		write(1, "minishell: unexpected error while looking for matching quotes \'\n", 65);
+		write(1, \
+		"minishell: unexpected error while looking for matching quotes \'\n", 65);
 	if (erro == '\"')
-		write(1, "minishell: unexpected error while looking for matching quotes \"\n", 65);
+		write(1, \
+		"minishell: unexpected error while looking for matching quotes \"\n", 65);
 	return (0);
 }
 
-
-void errorFork (char *str1, char *str2, char *str3, int code)
+void	errorfork(char *str1, char *str2, char *str3, int code)
 {
 	ft_putstr_fd(str1, 2);
 	ft_putstr_fd(str2, 2);
@@ -32,7 +33,7 @@ void errorFork (char *str1, char *str2, char *str3, int code)
 	g_ex_status = code;
 }
 
-void errorMinishell (char *str1, char *str2, char *str3)
+void	errorminishell(char *str1, char *str2, char *str3)
 {
 	ft_putstr_fd(str1, 2);
 	ft_putstr_fd(str2, 2);

@@ -16,17 +16,11 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -g0
 LIBFT = ./libft/libft.a
 RM = rm -rf
-# são variáveis de ambiente que estão sendo definidas na makefile para serem usadas no processo de compilação/linkagem do programa.
 
-# A variável CPPFLAGS está definindo a opção -I que informa ao compilador que deve incluir o diretório /usr/local/opt/readline/include no caminho de busca dos cabeçalhos de arquivos de inclusão durante a compilação. Isso significa que se houver arquivos de inclusão necessários para compilar o programa localizados nesse diretório, o compilador será capaz de encontrá-los sem problemas.
+CPPFLAGS = -I/usr/local/opt/readline/include
+LDFLAGS = -L/usr/local/opt/readline/lib
 
-# Já a variável LDFLAGS está definindo a opção -L que informa ao linker que deve incluir o diretório /usr/local/opt/readline/lib no caminho de busca das bibliotecas durante a linkagem. Isso significa que se houver bibliotecas necessárias para linkar o programa localizadas nesse diretório, o linker será capaz de encontrá-las sem problemas.
-
-CPPFLAGS=-I/usr/local/opt/readline/include
-LDFLAGS=-L/usr/local/opt/readline/lib
-
-SRC = main.c prompt.c init.c signal.c utils.c echo.c builtins.c pwd.c cd.c exit.c envp.c mtr_util.c export.c unset.c env.c ft_lst_utils.c \
-		input.c operators.c redirections.c exec.c path.c
+SRC = main.c prompt.c init.c signal.c utils.c builtins.c envp.c mtr_util.c ft_token_utils.c aspas.c cmd_utils.c expander.c expander_utils.c expander_utils1.c expander_utils2.c expander_utils3.c error.c input.c parser.c parser_utils.c path.c exec.c exec_utils.c free.c redirect_in.c redirect_out.c redirects_utils.c operators.c aspas1.c aspas2.c
 
 
 # OBJS_FILES = $(SRC:.c=.o)
@@ -76,12 +70,6 @@ $(OBJ_DIR)/%.o: src/utils/%.c
 $(OBJ_DIR)/%.o: src/builtins/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJ_DIR)/%.o: src/lexer/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(OBJ_DIR)/%.o: src/executor/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
 compilation_start:
 	@ $(COMPILATION_START)
 
@@ -98,6 +86,22 @@ fclean: clean
 re:	fclean all
 	@ $(RE)
 
-.PHONY: all clean fclean re bonus
+# noleaks: re
+# 	valgrind ./minishell
+
+# noleaksfull: re
+# 	valgrind --leak-check=full --show-leak-kinds=all -s ./minishell
+
+# noleakslog: re
+# 	valgrind --leak-check=full --show-leak-kinds=all --log-file=output.log ./minishell
+
+rerun: re
+	./minishell
+
+exec:
+	./minishell
+
+
+.PHONY: all clean fclean re bonus exec rerun
 
 .SILENT:

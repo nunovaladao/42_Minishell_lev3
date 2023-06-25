@@ -12,14 +12,15 @@
 
 #include "../minishell.h"
 
-extern int g_ex_status;
+extern int	g_ex_status;
 
-void lexer_op(t_shell *sh)  // resolver a situação ls | e ls >>
+void	lexer_op(t_shell *sh)
 {
 	token_node(sh, 'N');
 	if (sh->cmd_line[sh->i] == 60 || sh->cmd_line[sh->i] == 62)
 	{
-		if (sh->cmd_line[sh->i + 1] && sh->cmd_line[sh->i] == sh->cmd_line[sh->i + 1])
+		if (sh->cmd_line[sh->i + 1] \
+		&& sh->cmd_line[sh->i] == sh->cmd_line[sh->i + 1])
 			sh->i += 2;
 		else
 			sh->i++;
@@ -29,7 +30,7 @@ void lexer_op(t_shell *sh)  // resolver a situação ls | e ls >>
 	token_node(sh, 'O');
 }
 
-void spaces(t_shell *sh)
+void	spaces(t_shell *sh)
 {
 	if (sh->i - sh->wd_lim)
 		node(sh, ft_substr(sh->cmd_line, sh->wd_lim, (sh->i - sh->wd_lim)));
@@ -38,24 +39,24 @@ void spaces(t_shell *sh)
 	sh->wd_lim = sh->i;
 }
 
-int div_input(t_shell *sh)
+int	div_input(t_shell *sh)
 {
-	bool dentroDeAspas = false;
-	bool dentroDeAspasS = false;
+	bool	daspas;
+	bool	d_s_aspas;
 
+	daspas = false;
+	d_s_aspas = false;
 	sh->i = 0;
 	sh->wd_lim = 0;
-	sh->pipeOp = 0;
-	// sh->proc = 0;
-	// printf("teste1\n");
+	sh->pipeop = 0;
 	while (sh->cmd_line[sh->i] != '\0')
 	{
 		if (sh->cmd_line[sh->i] == '\"')
-			dentroDeAspas = !dentroDeAspas;
+			daspas = !daspas;
 		if (sh->cmd_line[sh->i] == '\'')
-			dentroDeAspasS = !dentroDeAspasS;
-		if (sh->cmd_line[sh->i] == ' ' && !dentroDeAspas && !dentroDeAspasS)
-		 	spaces(sh);
+			d_s_aspas = !d_s_aspas;
+		if (sh->cmd_line[sh->i] == ' ' && !daspas && !d_s_aspas)
+			spaces(sh);
 		else if (is_operator(sh->cmd_line[sh->i]))
 			lexer_op(sh);
 		else
@@ -66,31 +67,34 @@ int div_input(t_shell *sh)
 	return (0);
 }
 
-
-
-static int div_words(t_shell *sh)
+static int	div_words(t_shell *sh)
 {
-	if (checkdAspas(sh))
+	if (checkdaspas(sh))
 		return (1);
-	if (!verificarAspas(sh))
+	if (!verificaraspas(sh))
 	{
 		error_quotes('\'');
 		return (1);
 	}
 	if (div_input(sh))
 		return (1);
+	printf("after div words\n");
 	print_list(sh);
-	rmvAspas(sh);
+	if (!checkaspas2(sh))
+		rmvaspas(sh);
 	return (0);
 }
 
-int words(t_shell *sh)
+/*retirei antes do return fill_index(sh);*/
+int	words(t_shell *sh)
 {
 	if (div_words(sh))
 	{
 		g_ex_status = 2;
 		return (1);
 	}
+	printf("after remove aspas\n");
+	print_list(sh);
 	if (operators(sh))
 		return (1);
 	if (expand(sh))

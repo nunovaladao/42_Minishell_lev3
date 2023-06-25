@@ -12,35 +12,41 @@
 
 #include "../minishell.h"
 
-extern int g_ex_status;
+extern int	g_ex_status;
 
-int	fileIn(t_cmds *node, t_token *token)
+int	check_file_access(t_cmds *node, t_token *token)
 {
-	if (is_dir(token->word) == 1)
-	{
-		node->outfd = -2;
-		errorMinishell("minishell: ", token->word, ": Is a dir\n");
-		g_ex_status = 1;
-		return (1);
-	}
 	if (access(token->word, F_OK) == 0)
 	{
+		printf("valor de acess no redirin %d\n", access(token->word, F_OK));
 		if (access(token->word, R_OK) == 0)
 		{
-			node->infd = open(token->word, O_RDONLY, 0644); // dá -1 se falhar
+			node->infd = open(token->word, O_RDONLY, 0644);
 			return (0);
 		}
 		node->infd = -2;
-		errorMinishell("minishell: ", token->word, ": Permission denied");
+		errorminishell("minishell: ", token->word, ": Permission denied");
 		g_ex_status = 1;
 		return (1);
 	}
 	else
 	{
 		node->infd = -2;
-		errorMinishell("minishell: ", token->word, ": No such file or directory\n");
+		errorminishell("minishell: ", token->word, \
+		": No such file or directory\n");
 		g_ex_status = 1;
 		return (1);
 	}
-	return (0);
+}
+
+int	filein(t_cmds *node, t_token *token)
+{
+	if (is_dir(token->word) == 1)
+	{
+		node->outfd = -2;
+		errorminishell("minishell: ", token->word, ": Is a dir\n");
+		g_ex_status = 1;
+		return (1);
+	}
+	return (check_file_access(node, token));
 }

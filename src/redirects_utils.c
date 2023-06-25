@@ -12,68 +12,67 @@
 
 #include "../minishell.h"
 
-extern int g_ex_status;
+extern int	g_ex_status;
 
-char *dirPath(t_shell *sh) // devolve o directório onde vamos colocar o file
+char	*dirpath(t_shell *sh)
 {
-	char *path;
-	char *tmp;
+	char	*path;
+	char	*tmp;
 
 	path = NULL;
 	tmp = NULL;
 	tmp = get_env("PWD", sh);
 	if (!tmp)
-        return (NULL);
+		return (NULL);
 	path = ft_strjoin(tmp, "/");
 	free(tmp);
 	return (path);
 }
 
-char *fullPath(char *path, t_token *token) // devolve a path incluindo o nome do file 
+char	*fullpath(char *path, t_token *token)
 {
-	char *allPath;
+	char	*allpath;
 
-	allPath = NULL;
-	allPath = ft_strjoin(path, token->word);
-	return (allPath);
+	allpath = NULL;
+	allpath = ft_strjoin(path, token->word);
+	return (allpath);
 }
 
-static int redHeredoc(char *delimeter)
+static int	redheredoc(char *delimeter)
 {
-    char *buffer;
-    int fd[2];
+	char		*buffer;
+	int			fd[2];
 
-    pipe(fd);
-    while (1)
-    {
-        //signals();
-        buffer = readline("> ");
-        if (!buffer)
-        {
-            free(buffer);
-            break ;
-        }   
-        if (ft_strcmp(buffer, delimeter) == 0)
-        {
-            free(buffer);
-            break ;
-        }
-        ft_putendl_fd(buffer, fd[1]);
-    }
-    close(fd[1]);
+	pipe(fd);
+	while (1)
+	{
+		buffer = readline("> ");
+		if (!buffer)
+		{
+			free(buffer);
+			break ;
+		}
+		if (ft_strcmp(buffer, delimeter) == 0)
+		{
+			free(buffer);
+			break ;
+		}
+		ft_putendl_fd(buffer, fd[1]);
+	}
+	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
-    return (0);
+	return (0);
 }
 
 int	parse_redirecs(t_cmds *node, t_token *token)
 {
-	if (ft_strcmp(token->word, ">") == 0
-		|| ft_strcmp(token->word, ">>") == 0)
-		return (fileOut(node, token->next));
+	if (ft_strcmp(token->word, ">") == 0 \
+	|| ft_strcmp(token->word, ">>") == 0)
+		return (fileout(node, token->next));
 	if (ft_strcmp(token->word, "<") == 0)
-		return (fileIn(node, token->next));
+		return (filein(node, token->next));
 	if (ft_strcmp(token->word, "<<") == 0)
-		return (redHeredoc(token->next->word));
+		return (redheredoc(token->next->word));
 	return (0);
 }
