@@ -12,9 +12,9 @@
 
 #include "../../minishell.h"
 
-int mtr_len(char **matriz)
+int	mtr_len(char **matriz)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (matriz && matriz[i])
@@ -22,9 +22,9 @@ int mtr_len(char **matriz)
 	return (i);
 }
 
-void mtr_free(char **matriz)
+void	mtr_free(char **matriz)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	if (!matriz)
@@ -38,10 +38,10 @@ void mtr_free(char **matriz)
 	matriz = NULL;
 }
 
-char **mtr_dup(char **matriz)
+char	**mtr_dup(char **matriz)
 {
-	char **dup;
-	int i;
+	int		i;
+	char	**dup;
 
 	i = 0;
 	dup = (char **)malloc(sizeof(char *) * (mtr_len(matriz) + 1));
@@ -52,7 +52,7 @@ char **mtr_dup(char **matriz)
 		dup[i] = ft_strdup(matriz[i]);
 		if (!dup[i])
 		{
-			mtr_free(dup);	
+			mtr_free(dup);
 			return (NULL);
 		}
 		i++;
@@ -61,11 +61,11 @@ char **mtr_dup(char **matriz)
 	return (dup);
 }
 
-char **mtr_addnew(char *str, char **matrizold)
+char	**mtr_addnew(char *str, char **matrizold)
 {
-	char **matriznew;
-	int len;
-	int i;
+	int		i;
+	int		len;
+	char	**matriznew;
 
 	i = -1;
 	len = mtr_len(matrizold) + 1;
@@ -90,11 +90,11 @@ char **mtr_addnew(char *str, char **matrizold)
 	return (matriznew);
 }
 
-char **mtr_rmv(int pos, char **matrizold)
+char	**mtr_rmv(int pos, char **matrizold)
 {
-	char **matriznew;
-	int len;
-	int i;
+	int		i;
+	int		len;
+	char	**matriznew;
 
 	i = -1;
 	len = mtr_len(matrizold) - 1;

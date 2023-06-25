@@ -14,7 +14,7 @@
 
 void	free_listcmds(t_cmds *list)
 {
-	t_cmds	*current;
+	t_cmds		*current;
 
 	if (!list)
 		return ;

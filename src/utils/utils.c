@@ -12,19 +12,19 @@
 
 #include "../../minishell.h"
 
-int nb_of_args(t_cmds *cmds)
+int	nb_of_args(t_cmds *cmds)
 {
-    int i;
+	int		i;
 
-    i = 0;
-    while (cmds->cmd_line[i] != NULL)
-        i++;
-    return (i);
+	i = 0;
+	while (cmds->cmd_line[i] != NULL)
+		i++;
+	return (i);
 }
 
 int	pos_char(char *str, char c)
 {
-	int	i;
+	int		i;
 
 	if (!str)
 		return (-1);

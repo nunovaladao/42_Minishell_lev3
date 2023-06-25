@@ -12,115 +12,88 @@
 
 #include "../minishell.h"
 
-// char **cmd_line;
-// 	char *new_dir;
-// 	char *path;
-// 	int infd;
-// 	int outfd;
-// 	int fork; //flag que diz se o nó foi feito fork
-// 	char	*var;
-// 	char	*value;
-// 	int	index; // index de cada cmd - processo a criar
-// 	int	total; // total de processo a criar
-// 	struct s_cmds *next;
-// 	struct s_cmds *prev;
-
-void initNodeCmds(t_cmds *node)
-{
-	node->cmd_line = NULL;
-	node->new_dir = NULL;
-	node->path = NULL;
-	node->value = NULL;
-	node->var = NULL;
-	node->oldpwd = NULL;
-	node->pwd = NULL;
-	node->index = 0;
-	node->total = 0;
-	node->infd = STDIN_FILENO;
-	node->outfd = STDOUT_FILENO;
-}
-
-int checkOperators(t_shell *sh, t_token *token, t_cmds *node)
+int	checkoperators(t_shell *sh, t_token *token, t_cmds *node)
 {
 	if (ft_strcmp(token->word, "|") == 0)
 	{
-		sh->pipeOp++;
+		sh->pipeop++;
 		node_cmds(&(sh->cmds));
-		node = node->next;// utilizado para iniciar o nó a seguir
-		initNodeCmds(node);
+		node = node->next;
+		initnodecmds(node);
 	}
-	else if (ft_strcmp(token->word, "<<") == 0) // pode ser alterado
+	else if (ft_strcmp(token->word, "<<") == 0)
 		return (parse_redirecs(node, token));
 	else
 		return (parse_redirecs(node, token));
 	return (0);
 }
 
-void createNewCmd(t_cmds *node, char *str)
+static void	init_cmds(t_cmds *node, char *str)
 {
-    int count = 0;
-	int i = 0;
-    char **new_cmd = NULL;
+	node->cmd_line = (char **)malloc(sizeof(char *) * 2);
+	node->cmd_line[0] = ft_strdup(str);
+	node->cmd_line[1] = NULL;
+}
 
-    if (node->cmd_line == NULL)
-    {
-        node->cmd_line = (char **)malloc(sizeof(char *) * 2); // 2 porque além da str coloquo NULL
-        // if (!str)
-		// 	node->cmd_line[0] = NULL;
-		node->cmd_line[0] = ft_strdup(str);
-        node->cmd_line[1] = NULL;
-        return;
-    }
-    while (node->cmd_line[count])
-        count++;
-    new_cmd = (char **)malloc(sizeof(char *) * (count + 2)); //mesma razão que acima
-    while (i < count)
-    {
-        new_cmd[i] = ft_strdup(node->cmd_line[i]);
-        free(node->cmd_line[i]);
+static void	add_cmd(t_cmds *node, char *str)
+{
+	int		i;
+	int		count;
+	char	**new_cmd;
+
+	i = 0;
+	count = 0;
+	new_cmd = NULL;
+	while (node->cmd_line[count])
+		count++;
+	new_cmd = (char **)malloc(sizeof(char *) * (count + 2));
+	while (i < count)
+	{
+		new_cmd[i] = ft_strdup(node->cmd_line[i]);
+		free(node->cmd_line[i]);
 		i++;
-    }
-    new_cmd[count] = ft_strdup(str);
-    new_cmd[count + 1] = NULL;
-    free(node->cmd_line);
-    node->cmd_line = mtr_dup(new_cmd); // temos que utilizar dup porque senão não copia
-	// printf("pointer cmd_line1 %p\n", node->cmd_line);
+	}
+	new_cmd[count] = ft_strdup(str);
+	new_cmd[count + 1] = NULL;
+	free(node->cmd_line);
+	node->cmd_line = mtr_dup(new_cmd);
 	mtr_free(new_cmd);
 }
 
-/*Caso importante quando coloco $fhggj dá nulo o ponter. Ou seja quando a variavel de ambiente não existe, não faz estrutura cmds, caso importante é quando é o primeiro ou seja, é o unico comando colocado neste caso temos de verificar se não dá segfault colocando a verificação se existe*/
-
-int parser(t_shell *sh)
+void	createnewcmd(t_cmds *node, char *str)
 {
-	t_token *token;
-	t_cmds *node;
+	if (node->cmd_line == NULL)
+		init_cmds(node, str);
+	else
+		add_cmd(node, str);
+}
 
-	print_list(sh);
+/*fill index colocado no input após parser*/
+int	parser(t_shell *sh)
+{
+	t_token		*token;
+	t_cmds		*node;
+
 	node = NULL;
 	token = NULL;
 	token = sh->head_token;
 	node_cmds(&(sh->cmds));
-	node = sh->cmds;		
-	initNodeCmds(node);
+	node = sh->cmds;
+	initnodecmds(node);
 	while (token != NULL)
 	{
 		if (token->type == 'O')
 		{
-			if (checkOperators(sh, token, node)) // se existir um pipe colocámos mais um nó onde vamos colocar o seguinte cmd
+			if (checkoperators(sh, token, node))
 				return (1);
-			if (node->next)  // acrescentamos o nó e aqui verificamos se existe
-				node = node->next; // temos que incrementar o nó para utilizara a seguir
-			//aqui tem que ser feito os redirects
+			if (node->next)
+				node = node->next;
 			if (ft_strcmp(token->word, "|") != 0 && token->next)
 				token = token->next;
 		}
 		else if (token->word != NULL)
-			createNewCmd(node, token->word);
+			createnewcmd(node, token->word);
 		token = token->next;
 	}
-	fill_index(sh);
-	// print_cmds(sh); // verificar em caso de segfault o que pode acontecer e é normal quando não existe cmd
 	return (0);
 }
-
-/*Quando a word vinda do lexer e expnader, caso não exista var de ambiente a word no token será nula, neste caso o sh->cmds->cmd_line é nil - nulo usar isto no exec e prever segfalts*/

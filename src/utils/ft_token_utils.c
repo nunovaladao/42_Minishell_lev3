@@ -12,9 +12,9 @@
 
 #include "../../minishell.h"
 
-void node_type(t_shell *sh, char c)
+void	node_type(t_shell *sh, char c)
 {
-	t_token *last;
+	t_token		*last;
 
 	last = sh->head_token;
 	while (last->next)
@@ -25,26 +25,28 @@ void node_type(t_shell *sh, char c)
 /*função de teste - imprime a lista - palavras e tipo*/
 void	print_list(t_shell *sh)
 {
-    t_token *current = sh->head_token;
+	t_token	*current;
 
-	if(!sh->head_token)
+	current = sh->head_token;
+	if (!sh->head_token)
 		return ;
-    while (current != NULL) {
-        current = current->next;
-    }
+	while (current != NULL)
+	{
+		printf("Word:%s, Type: %c\n", current->word, current->type);
+		current = current->next;
+	}
 }
-
 
 void	*node(t_shell *sh, char *word)
 {
-	t_token	*new;
-	t_token *last;
+	t_token		*new;
+	t_token		*last;
 
 	new = NULL;
 	new = (t_token *)malloc(sizeof(t_token));
 	if (!new)
 		return (NULL);
-	new->word = word;
+	new->word = ft_strdup(word);
 	new->type = 'N';
 	new->next = NULL;
 	new->prev = NULL;
@@ -61,9 +63,9 @@ void	*node(t_shell *sh, char *word)
 	return (NULL);
 }
 
-void token_node(t_shell *sh, char c)
+void	token_node(t_shell *sh, char c)
 {
-	char *str;
+	char	*str;
 
 	str = NULL;
 	if (sh->i - sh->wd_lim)
@@ -78,14 +80,14 @@ void token_node(t_shell *sh, char c)
 
 void	free_listtoken(t_token *list)
 {
-	t_token	*current;
+	t_token		*current;
 
 	if (!list)
 		return ;
 	current = list;
 	while (list != NULL)
 	{
-		free(current->word); /*aqui estou a libertar a ft_substr*/
+		free(current->word);
 		current = list->next;
 		free(list);
 		list = current;

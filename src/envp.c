@@ -12,49 +12,55 @@
 
 #include "../minishell.h"
 
-int pos_envp(char *var, char **envp)
+/*alterado no if tinha var em vez de envp[i]*/
+
+int	pos_envp(char *var, char **envp)
 {
-	int i;
-	int len;
+	int		i;
+	int		len;
 
 	if (!envp || !*envp)
 		return (-1);
 	len = ft_strlen(var);
+	printf("len getenv %d\n", len);
 	i = -1;
 	while (envp[++i])
 	{
 		if (!ft_strncmp(envp[i], var, len))
 		{
-			if (pos_char(var, '=') == len || pos_char(var, '\0') == len)
+			if (pos_char(envp[i], '=') == len || pos_char(envp[i], '\0') == len)
 				return (i);
 		}
 	}
 	return (-1);
 }
 
-char	*get_env(char *var, t_shell *sh) // pensar usar este
+char	*get_env(char *var, t_shell *sh)
 {
-	int	pos;
+	int		pos;
 
+	printf("var getenv %s\n", var);
 	pos = pos_envp(var, sh->envp);
+	printf("pos getenv %d\n", pos);
 	if (pos < 0 || !ft_strchr(sh->envp[pos], '='))
 		return (NULL);
 	return (ft_strdup(sh->envp[pos] + (ft_strlen(var) + 1)));
 }
 
-int put_var_env(char *var, char *value, t_shell *shell)
+int	put_var_env(char *var, char *value, t_shell *shell)
 {
-	int pos;
+	int		pos;
 
 	pos = pos_envp(var, shell->envp);
 	if (value == NULL)
 	{
 		if (pos < 0)
 			shell->envp = mtr_addnew(var, shell->envp);
-		return 0;
+		return (0);
 	}
 	if (pos < 0)
-		shell->envp = mtr_addnew(ft_strjoin(var, ft_strjoin("=", value)), shell->envp);
+		shell->envp = mtr_addnew(ft_strjoin(var, \
+		ft_strjoin("=", value)), shell->envp);
 	else
 	{
 		free(shell->envp[pos]);
@@ -63,9 +69,9 @@ int put_var_env(char *var, char *value, t_shell *shell)
 	return (0);
 }
 
-void remv_var_env(char *var, t_shell *shell)
+void	remv_var_env(char *var, t_shell *shell)
 {
-	int pos;
+	int		pos;
 
 	pos = pos_envp(var, shell->envp);
 	if (pos < 0)

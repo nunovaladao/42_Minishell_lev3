@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 14:07:46 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/06/15 22:50:11 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:36:33 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static int cd_back(t_shell *shell, t_cmds *cmds)
     cmds->oldpwd = getcwd(NULL, 0);
     if (chdir(tmp) != 0)
     {
-        free(cmds->oldpwd);
         printf("minishell: cd: ");
 		printf("%s", get_env("OLDPWD", shell));
 		printf(": No such file or directory\n");
@@ -35,8 +34,6 @@ static int cd_back(t_shell *shell, t_cmds *cmds)
     put_var_env("PWD", cmds->pwd, shell);
     put_var_env("OLDPWD", cmds->oldpwd, shell);
     printf("%s\n", cmds->pwd);
-    free(cmds->pwd);
-    free(cmds->oldpwd);
     return (g_ex_status = 0);
 }
 
@@ -53,7 +50,6 @@ static int get_cd_home(t_shell *shell, t_cmds *cmds)
     cmds->oldpwd = getcwd(NULL, 0);
     chdir(go_home);
     put_var_env("OLDPWD", cmds->oldpwd, shell);
-    free(cmds->oldpwd);
     return (g_ex_status = 0);
 }
 
@@ -71,7 +67,6 @@ int built_cd(t_cmds *cmds, t_shell *shell)
     cmds->oldpwd = getcwd(NULL, 0);
     if (chdir(cmds->cmd_line[1]) == -1)
     {
-        free(cmds->oldpwd);
         ft_putstr_fd("minishell: cd: ", STDOUT_FILENO);
 		ft_putstr_fd(cmds->cmd_line[1], STDOUT_FILENO);
 		ft_putstr_fd(": No such file or directory\n", STDOUT_FILENO);
@@ -80,7 +75,5 @@ int built_cd(t_cmds *cmds, t_shell *shell)
     cmds->pwd = getcwd(NULL, 0);
     put_var_env("PWD", cmds->pwd, shell);
     put_var_env("OLDPWD", cmds->oldpwd, shell);
-    free(cmds->pwd);
-    free(cmds->oldpwd);
     return (g_ex_status = 0);
 }

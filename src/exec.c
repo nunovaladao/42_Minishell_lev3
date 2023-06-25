@@ -12,95 +12,77 @@
 
 #include "../minishell.h"
 
-extern int g_ex_status;
+extern int	g_ex_status;
 
-int is_dir(const char *path)
+void	childprocess(t_cmds *cmd, int *fd)
 {
-    DIR *dir;
-
-	dir = opendir(path);
-    if (dir)
-    {
-        closedir(dir);
-        return (1);
-    }
-    return (0);
-}
-
-int is_fork(t_shell *sh, t_cmds *cmd, int *fd)
-{
-	if (cmd->infd == -1 || cmd->outfd == -1)
-		return (0);
-	if ((cmd->path && !access(cmd->path, X_OK) && !is_dir(cmd->path)) || checkBuiltins(cmd)) //alteração verificar se funciona
+	if (cmd->infd != STDIN_FILENO)
 	{
-
-		makeFork(sh, cmd, fd);
-		sh->fork = 1;
-		sh->proc++;
+		if (dup2(cmd->infd, STDIN_FILENO) == -1)
+			g_ex_status = 1;
+		close(cmd->infd);
 	}
-	if (!cmd->path && ft_strchr(cmd->cmd_line[0], '/'))
-		errorFork("minishell: ", cmd->cmd_line[0],": No such file or directory\n", 127);
-	else if (!cmd->path && !ft_strchr(cmd->cmd_line[0], '/'))
-		errorFork("minishell: ", cmd->cmd_line[0],": command not found\n", 127);
-	else if (is_dir(cmd->path))
-		errorFork("minishell: ", cmd->cmd_line[0],": Is directory\n", 126);
-	else if (access(cmd->path, X_OK) == -1)
-		errorFork("minishell: ", cmd->cmd_line[0],": Permission denied\n", 126);
-	return (1);
+	if (cmd->outfd != STDOUT_FILENO)
+	{
+		if (dup2(cmd->outfd, STDOUT_FILENO) == -1)
+			g_ex_status = 1;
+		close(cmd->outfd);
+	}
+	else if (cmd->next)
+	{
+		if (dup2(fd[1], STDOUT_FILENO) == -1)
+			g_ex_status = 1;
+	}
+	close(fd[1]);
+	close(fd[0]);
 }
 
-void makeFork(t_shell *sh, t_cmds *cmd, int *fd)
+void	makefork(t_shell *sh, t_cmds *cmd, int *fd)
 {
-    sh->pid = fork();
-    if (sh->pid < 0) 
+	sh->pid = fork();
+	if (sh->pid < 0)
 	{
-        close(fd[0]);
-        close(fd[1]);
-        g_ex_status = 1;
-    }
-    if (sh->pid == 0) 
-	{
-        // Processo filho
-		if (cmd->infd != STDIN_FILENO)
-		{
-			if (dup2(cmd->infd, STDIN_FILENO) == -1)
-				g_ex_status = 1;
-			close(cmd->infd);
-		}
-		if (cmd->outfd != STDOUT_FILENO)
-		{
-			if (dup2(cmd->outfd, STDOUT_FILENO) == -1)
-				g_ex_status = 1;
-			close(cmd->outfd);
-		}
-		else if (cmd->next)
-		{
-			if (dup2(fd[1], STDOUT_FILENO) == -1)
-				g_ex_status = 1;
-		}
-		close(fd[1]);
 		close(fd[0]);
+		close(fd[1]);
+		g_ex_status = 1;
+	}
+	if (sh->pid == 0)
+	{
+		childprocess(cmd, fd);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		if (!checkBuiltins(cmd))
+		if (!checkbuiltins(cmd))
 			execve(cmd->path, cmd->cmd_line, sh->envp);
-		else if (checkBuiltins(cmd) > 0)
+		else if (checkbuiltins(cmd) > 0)
 			builtins(cmd, sh);
 		exit(g_ex_status);
 	}
 }
 
- /*lembrar de libertar a path*/
-int execCmd (t_shell *sh)
+void	parentprocess(t_cmds *cmd, int *fd)
 {
-	t_cmds *cmd;
-	int fd[2];
+	close(fd[1]);
+	if (cmd->next && (cmd->next->infd == STDIN_FILENO))
+		cmd->next->infd = fd[0];
+	else
+		close(fd[0]);
+	if (cmd->infd > 2)
+		close(cmd->infd);
+	if (cmd->outfd > 2)
+		close(cmd->outfd);
+}
+
+/*lembrar de libertar a path*/
+int	execcmd(t_shell *sh)
+{
+	t_cmds	*cmd;
+	int		fd[2];
 
 	cmd = sh->cmds;
 	while (cmd)
 	{
 		sh->fork = 0;
-		if (cmd->cmd_line && checkBuiltins(cmd) < 0 && !cmd->next)
+		if (cmd->cmd_line && checkbuiltins(cmd) < 0 && !cmd->next)
 			builtins(cmd, sh);
 		else if (cmd->cmd_line && cmd->infd != -2 && cmd->outfd != -2)
 		{
@@ -113,15 +95,7 @@ int execCmd (t_shell *sh)
 				return (1);
 			}
 			is_fork(sh, cmd, fd);
-			close(fd[1]);	
-			if (cmd->next && (cmd->next->infd == STDIN_FILENO))
-				cmd->next->infd = fd[0];
-			else
-				close(fd[0]);
-			if (cmd->infd > 2) // porque estou no ciclo while
-				close(cmd->infd);
-			if (cmd->outfd > 2)
-				close(cmd->outfd);
+			parentprocess(cmd, fd);
 		}
 		cmd = cmd->next;
 	}

@@ -12,25 +12,32 @@
 
 #include "../minishell.h"
 
-extern int g_ex_status;
+extern int	g_ex_status;
 
-int countAspas(char *str)
+int	countaspas(char *str)
 {
-	int i;
-	int aspas;
+	char	c;
+	int		i;
+	int		pairs;
 
 	i = 0;
-	aspas = 0;
-	while (str[i])
+	pairs = 0;
+	while (str[i] != '\0')
 	{
-		if (str[i] == '\'' || str[i] == '\"')
-			aspas++;
+		if (str[i] == 34 || str[i] == 39)
+		{
+			c = str[i];
+			i++;
+			pairs++;
+			while (str[i] != c)
+				i++;
+		}
 		i++;
 	}
-	return (aspas);
+	return (pairs);
 }
 
-void	wordOutAspas(t_token *node)
+void	wordoutaspas(t_token *node)
 {
 	char	c;
 	char	*str;
@@ -39,8 +46,8 @@ void	wordOutAspas(t_token *node)
 
 	i = 0;
 	j = 0;
-	str = (char *)malloc(sizeof(char) * ((ft_strlen(node->word)
-					- (countAspas(node->word)) + 1)));
+	str = (char *)malloc(sizeof(char) * ((ft_strlen(node->word) \
+	- (countaspas(node->word) * 2) + 1)));
 	while (node->word[i] != '\0')
 	{
 		if (node->word[i] == '\'' || node->word[i] == '\"')
@@ -59,66 +66,17 @@ void	wordOutAspas(t_token *node)
 	node->word = str;
 }
 
-int rmvAspas(t_shell *sh)
+int	rmvaspas(t_shell *sh)
 {
-	t_token *node;
+	t_token	*node;
 
 	node = NULL;
 	node = sh->head_token;
 	while (node)
 	{
 		if (!ft_strchr(node->word, '$'))
-			wordOutAspas(node);
+			wordoutaspas(node);
 		node = node->next;
 	}
 	return (0);
-}
-
-int checkdAspas(t_shell *sh)
-{
-	int i;
-	bool dentroDeAspas = false;
-	bool dentroDeSAspas = false;
-
-	i = 0;
-	while (sh->cmd_line[i] !='\0')
-	{
-        if (sh->cmd_line[i] == '\"')
-		    	dentroDeAspas = !dentroDeAspas;
-        if (sh->cmd_line[i] == '\'')
-		    	dentroDeSAspas = !dentroDeSAspas;
-        i++;
-    }
-	if (dentroDeAspas)
-	{
-		error_quotes('\"');
-		return (1);
-	}
-	if (dentroDeSAspas)
-	{
-		error_quotes('\'');
-		return (1);
-	}	
-	return (0);
-}
-
-bool verificarAspas(t_shell *sh) // para controlar a situação "'ls"'
-{
-    int contadorAspasSimples = 0;
-    int contadorAspasDuplas = 0;
-    bool dentroAspasSimples = false;
-
-    for (int i = 0; sh->cmd_line[i] != '\0'; i++) 
-	{
-        if (sh->cmd_line[i] == '\'') 
-		{
-            contadorAspasSimples++;
-            dentroAspasSimples = !dentroAspasSimples;
-        } 
-		else if (sh->cmd_line[i] == '\"' && !dentroAspasSimples) 
-		{
-            contadorAspasDuplas++;
-        }
-    }
-    return (contadorAspasSimples % 2 == 0 && contadorAspasDuplas % 2 == 0);
 }

@@ -12,30 +12,51 @@
 
 #include "../minishell.h"
 
+void	initnodecmds(t_cmds *node)
+{
+	node->cmd_line = NULL;
+	node->new_dir = NULL;
+	node->path = NULL;
+	node->value = NULL;
+	node->var = NULL;
+	node->oldpwd = NULL;
+	node->pwd = NULL;
+	node->index = 0;
+	node->total = 0;
+	node->infd = STDIN_FILENO;
+	node->outfd = STDOUT_FILENO;
+}
+
+/*retirar esta função*/
 void	print_cmds(t_shell *sh)
 {
-    t_cmds *current = sh->cmds;
-	int i = 0;
+	int			i;
+	t_cmds		*current;
 
-	if(!sh->cmds)
+	current = sh->cmds;
+	if (!sh->cmds)
 		return ;
 	while (current)
 	{
 		i = 0;
-    	while (current->cmd_line[i]) 
+		while (current->cmd_line[i])
 		{
-        	i++;
-    	}
+			printf("index%d Cmd%d :%s\n", \
+			current->index, i, current->cmd_line[i]);
+			i++;
+		}
 		current = current->next;
 	}
+	printf("nº of pipes %d\n", sh->pipeop);
 }
 
-void fill_index(t_shell *sh)
+void	fill_index(t_shell *sh)
 {
-	int  i = 0;
-	t_cmds *head;
+	int			i;
+	t_cmds		*head;
 
-	if(!sh->cmds)
+	i = 0;
+	if (!sh->cmds)
 		return ;
 	head = sh->cmds;
 	while (head)
@@ -44,16 +65,17 @@ void fill_index(t_shell *sh)
 		i++;
 		head = head->next;
 	}
-	sh->cmds->total = i + 1; // porque estamos a considerar o zero no i
+	sh->cmds->total = i + 1;
 }
 
 void	*node_cmds(t_cmds **node)
 {
-	t_cmds	*new;
-	t_cmds *last;
+	t_cmds			*new;
+	t_cmds			*last;
 
 	new = NULL;
 	new = (t_cmds *)malloc(sizeof(t_cmds));
+	printf("dentro do parser node_cmd %p\n", new);
 	if (!new)
 		return (NULL);
 	new->next = NULL;
@@ -71,33 +93,31 @@ void	*node_cmds(t_cmds **node)
 	return (NULL);
 }
 
-void free_listcmd(t_cmds *head)
+void	free_listcmd(t_cmds *head)
 {
-	char **cmd_line;
-	int i;
-	t_cmds *next;
+	int			i;
+	char		**cmd_line;
+	t_cmds		*next;
 
-    while (head != NULL)
-    {
-        // Liberta o array cmd_line
-        if (head->cmd_line != NULL)
-        {
-            cmd_line = head->cmd_line;
-            i = 0;
-            while (cmd_line[i] != NULL)
-            {
-                free(cmd_line[i]);
-                i++;
-            }
-            free(cmd_line);
-        }
-        free(head->new_dir);
-        free(head->path);
-        free(head->var);
-        free(head->value);
+	while (head != NULL)
+	{
+		if (head->cmd_line != NULL)
+		{
+			i = -1;
+			cmd_line = head->cmd_line;
+			while (cmd_line[++i] != NULL)
+				free(cmd_line[i]);
+			free(cmd_line);
+		}
+		free(head->new_dir);
+		free(head->path);
+		free(head->var);
+		free(head->value);
+		free(head->oldpwd);
+		free(head->pwd);
 		head->index = 0;
 		next = head->next;
-        free(head);
-        head = next;
-    }
+		free(head);
+		head = next;
+	}
 }
