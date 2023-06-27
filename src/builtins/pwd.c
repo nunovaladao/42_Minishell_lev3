@@ -12,8 +12,8 @@
 
 #include "../../minishell.h"
 
-int built_pwd()
+int	built_pwd()
 {
-    printf("%s\n", getcwd(NULL, 0));
-    return (g_ex_status = 0);
+	printf("%s\n", getcwd(NULL, 0));
+	return (g_ex_status = 0);
 }

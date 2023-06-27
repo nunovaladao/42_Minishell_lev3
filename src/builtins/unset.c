@@ -12,13 +12,13 @@
 
 #include "../../minishell.h"
 
-int built_unset(t_cmds *cmds, t_shell *shell)
+int	built_unset(t_cmds *cmds, t_shell *shell)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (nb_of_args(cmds) > 1)
-        while (cmds->cmd_line[++i])
-            remv_var_env(cmds->cmd_line[i], shell);
-    return (g_ex_status = 0);
+	i = 0;
+	if (nb_of_args(cmds) > 1)
+		while (cmds->cmd_line[++i])
+ 			remv_var_env(cmds->cmd_line[i], shell);
+	return (g_ex_status = 0);
 }

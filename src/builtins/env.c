@@ -12,14 +12,14 @@
 
 #include "../../minishell.h"
 
-int built_env(t_shell *shell)
+int	built_env(t_shell *shell)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (!*shell->envp)
-        return (g_ex_status = 0);
-    while (shell->envp[i] && ft_strchr(shell->envp[i], '='))
-        printf("%s\n", shell->envp[i++]);
-    return (g_ex_status = 0);
+	i = 0;
+	if (!*shell->envp)
+ 		return (g_ex_status = 0);
+	while (shell->envp[i] && ft_strchr(shell->envp[i], '='))
+		printf("%s\n", shell->envp[i++]);
+	return (g_ex_status = 0);
 }
