@@ -66,7 +66,6 @@ int	checkaspas2(t_shell *sh)
 	len = 0;
 	count = 0;
 	len = ft_strlenaspas(sh->cmd_line);
-	printf("len %d\n", len);
 	if (len >= 2)
 	{
 		if (sh->cmd_line[0] == '\'')
@@ -74,7 +73,6 @@ int	checkaspas2(t_shell *sh)
 		else if (sh->cmd_line[0] == '\"')
 			count = countdoublequotes(sh->cmd_line);
 	}
-	printf("count %d\n", count);
 	if (count + 1 == len)
 		return (1);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:57:50 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/05/16 15:47:10 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/06/27 21:25:32 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int	built_echo(t_cmds *cmds)
 
 	n_flag = 0;
 	i = 1;
-	while (cmds->cmd_line[i] != NULL && ft_strcmp(cmds->cmd_line[i], "-n") == 0) 
+	while (cmds->cmd_line[i] != NULL && ft_strcmp(cmds->cmd_line[i], "-n") == 0)
 	{
 		n_flag = 1;
- 		i++;
+		i++;
 	}
 	if (cmds->cmd_line[i] != NULL)
- 	{
+	{
 		printf("%s", cmds->cmd_line[i]);
 		i++;
 	}

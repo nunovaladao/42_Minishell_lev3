@@ -22,7 +22,6 @@ static char	*get_environment_variable(const char *str, t_datamini *data)
 	var = NULL;
 	end = data->i;
 	var = ft_substr(str, data->start, end - data->start);
-	printf("var dentro da get %s\n", var);
 	data->i = end;
 	return (var);
 }

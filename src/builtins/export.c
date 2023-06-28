@@ -6,22 +6,22 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:18:20 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/06/20 23:08:43 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/06/27 21:23:02 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-bool	valid_identifier(char *var) 
+bool	valid_identifier(char *var)
 {
 	int	i;
 
 	if (!isalpha(var[0]) && var[0] != '_')
-		return false;
+		return (false);
 	i = 1;
-	while (var[i]) 
+	while (var[i])
 	{
-		if (!isalnum(var[i]) && var[i] != '_' && var[i] != '=') 
+		if (!isalnum(var[i]) && var[i] != '_' && var[i] != '=')
 			return (false);
 		if (var[i] == '=')
 			break ;
@@ -45,10 +45,10 @@ int	error_export(t_shell *shell, char *var)
 
 void	print_export(t_shell *shell)
 {
-	char *env_value;
-	char **env;
-	int i;
-	int j;
+	char	*env_value;
+	char	**env;
+	int		i;
+	int		j;
 
 	i = -1;
 	env = mtr_dup(shell->envp);
@@ -78,11 +78,11 @@ int	put_var_and_values(t_cmds *cmds, t_shell *shell)
 		if (valid_identifier(cmds->cmd_line[i]) == false)
 			return (error_export(shell, cmds->cmd_line[i]));
 		put_var_env_from_cmd(cmds->cmd_line[i], shell);
- 	}
+	}
 	return (g_ex_status = 0);
 }
 
-int	built_export(t_shell *shell ,t_cmds *cmds)
+int	built_export(t_shell *shell, t_cmds *cmds)
 {
 	if (nb_of_args(cmds) > 1)
 		put_var_and_values(cmds, shell);

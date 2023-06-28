@@ -6,7 +6,7 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 13:24:09 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/06/21 00:12:14 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/06/27 21:16:52 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	built_exit(t_cmds *cmds)
 		exit(g_ex_status = exit_status);
 	}
 	if (nb_args == 2 && args_numbers(cmds->cmd_line[1]) == 0)
-		g_ex_status = ft_atoi(cmds->cmd_line[1]); 
+		g_ex_status = ft_atoi(cmds->cmd_line[1]);
 	printf("exit\n");
 	if (nb_args > 2 && args_numbers(cmds->cmd_line[1]) == 0)
 	{

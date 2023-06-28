@@ -34,15 +34,12 @@ static char	*ft_result(char *str, char *env)
 	char	*result;
 
 	result = NULL;
-	printf("env dentro do ft_result: %s\n", env);
-	printf("rest dentro do ft_result: %s\n", str);
 	if (str && env)
 		result = ft_strjoin(str, env);
 	else if (str)
 		result = ft_strdup(str);
 	else if (env)
 		result = ft_strdup(env);
-	printf("result dentro do ft_result: %s\n", result);
 	if (!result)
 		return (NULL);
 	else
