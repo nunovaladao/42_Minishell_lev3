@@ -77,7 +77,6 @@ int	execcmd(t_shell *sh)
 {
 	t_cmds	*cmd;
 	int		fd[2];
-
 	cmd = sh->cmds;
 	while (cmd)
 	{

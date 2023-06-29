@@ -22,6 +22,7 @@ static char	*get_environment_variable(const char *str, t_datamini *data)
 	var = NULL;
 	end = data->i;
 	var = ft_substr(str, data->start, end - data->start);
+	printf("var dentro da get %s\n", var);
 	data->i = end;
 	return (var);
 }
@@ -33,14 +34,17 @@ static char	*get_env_value(char *str, char *var, t_datamini *data, t_shell *sh)
 	return (ft_substr(str, data->start - 1, data->i - data->start + 1));
 }
 
+/* já considera o espaço no while*/
 static void	initcicle2(char *str, t_datamini *data)
 {
 	(data->i)++;
 	data->start = data->i;
-	while (str[data->i] != '$' && str[data->i] && str[data->i] != '\'')
+	while (str[data->i] != '$' && str[data->i] \
+	&& str[data->i] != '\'' && str[data->i] != ' ')
 		(data->i)++;
 }
 
+/* já considera o espaço no if, também faço return do ft itoa diretamente*/
 char	*process_env_variable(char *str, t_datamini *d, t_shell *sh)
 {
 	char	*env;
@@ -48,17 +52,17 @@ char	*process_env_variable(char *str, t_datamini *d, t_shell *sh)
 
 	env = NULL;
 	var = NULL;
-	if (str[d->i] == '$' && (str[d->i + 1] == '\'' || str[d->i + 1] == '$'))
+	if (str[d->i] == '$' && (str[d->i + 1] == '\'' \
+	|| str[d->i + 1] == '$' || str[d->i + 1] == ' '))
 	{
 		env = ft_strdup("$");
 		(d->i)++;
 	}
 	else if (str[d->i] == '$' && str[d->i + 1] == '?')
 	{
-		env = ft_itoa(g_ex_status);
 		(d->i) += 2;
 		free(var);
-		return (env);
+		return (ft_itoa(g_ex_status));
 	}
 	else if (str[d->i] == '$')
 	{

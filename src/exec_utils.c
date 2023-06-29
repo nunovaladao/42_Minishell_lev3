@@ -29,14 +29,14 @@ int	is_fork(t_shell *sh, t_cmds *cmd, int *fd)
 {
 	if (cmd->infd == -1 || cmd->outfd == -1)
 		return (0);
-	if ((cmd->path && !access(cmd->path, X_OK) \
+	else if ((cmd->path && !access(cmd->path, X_OK) \
 	&& !is_dir(cmd->path)) || checkbuiltins(cmd))
 	{
 		makefork(sh, cmd, fd);
 		sh->fork = 1;
 		sh->proc++;
 	}
-	if (!cmd->path && ft_strchr(cmd->cmd_line[0], '/'))
+	else if (!cmd->path && ft_strchr(cmd->cmd_line[0], '/'))
 		errorfork("minishell: ", cmd->cmd_line[0], \
 		": No such file or directory\n", 127);
 	else if (!cmd->path && !ft_strchr(cmd->cmd_line[0], '/'))

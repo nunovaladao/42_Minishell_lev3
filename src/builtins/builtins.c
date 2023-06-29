@@ -31,9 +31,9 @@ int	checkbuiltins(t_cmds *cmd)
 	else if (!ft_strcmp(cmd->cmd_line[0], "export"))
 	{
 		if (cmd->cmd_line[1])
-			return (1);
-		else
 			return (-1);
+		else
+			return (1);
 	}
 	else
 		return (0);
