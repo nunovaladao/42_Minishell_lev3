@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmoreira <nmoreira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:29:58 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/06/17 21:25:23 by nmoreira         ###   ########.fr       */
+/*   Updated: 2023/06/29 11:27:49 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char	*search_path(t_shell *shell, t_cmds *cmds)
 	char	**paths;
 	char	*cmd;
 
-	printf("path teste: %s\n", ft_strchr(cmds->cmd_line[0], '/'));
 	if (ft_strchr(cmds->cmd_line[0], '/') \
 	&& access(cmds->cmd_line[0], F_OK) == 0)
 		return (ft_strdup(cmds->cmd_line[0]));

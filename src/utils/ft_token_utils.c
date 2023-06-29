@@ -32,7 +32,6 @@ void	print_list(t_shell *sh)
 		return ;
 	while (current != NULL)
 	{
-		printf("Word:%s, Type: %c\n", current->word, current->type);
 		current = current->next;
 	}
 }

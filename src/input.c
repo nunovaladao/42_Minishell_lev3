@@ -78,7 +78,6 @@ static int	div_words(t_shell *sh)
 	}
 	if (div_input(sh))
 		return (1);
-	printf("after div words\n");
 	print_list(sh);
 	if (!checkaspas2(sh))
 		rmvaspas(sh);
@@ -93,7 +92,6 @@ int	words(t_shell *sh)
 		g_ex_status = 2;
 		return (1);
 	}
-	printf("after remove aspas\n");
 	print_list(sh);
 	if (operators(sh))
 		return (1);

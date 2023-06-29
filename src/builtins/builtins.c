@@ -29,7 +29,12 @@ int	checkbuiltins(t_cmds *cmd)
 	else if (!ft_strcmp(cmd->cmd_line[0], "pwd"))
 		return (1);
 	else if (!ft_strcmp(cmd->cmd_line[0], "export"))
-		return (-1);
+	{
+		if (cmd->cmd_line[1])
+			return (1);
+		else
+			return (-1);
+	}
 	else
 		return (0);
 }
