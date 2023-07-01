@@ -22,9 +22,9 @@ int	checkoperators(t_shell *sh, t_token *token, t_cmds *node)
 		initnodecmds(node);
 	}
 	else if (ft_strcmp(token->word, "<<") == 0)
-		return (parse_redirecs(node, token));
+		return (parse_redirecs(sh, node, token));
 	else
-		return (parse_redirecs(node, token));
+		return (parse_redirecs(sh, node, token));
 	return (0);
 }
 

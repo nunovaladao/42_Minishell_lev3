@@ -28,6 +28,7 @@ char	*concate(char *new_str, char *rest)
 		return (new_str);
 	else if (rest)
 		new_str = ft_strdup(rest);
+	printf("new str com quotes checkEnv: %s\n", new_str);
 	return (new_str);
 }
 
@@ -47,6 +48,7 @@ char	*new_word(t_shell *sh, char *temp)
 			new_str = concate(new_str, rest);
 			free (rest);
 		}
+		printf("sh->i 3 newword %d\n", sh->i);
 	}
 	return (new_str);
 }
@@ -63,6 +65,7 @@ int	expand(t_shell *sh)
 		if (ft_strchr(node->word, '$'))
 		{
 			tmp = ft_strdup(node->word);
+			printf("len do temp no expand %ld\n", ft_strlen(node->word));
 			free(node->word);
 			node->word = new_word(sh, tmp);
 			free(tmp);

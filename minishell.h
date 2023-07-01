@@ -19,6 +19,12 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <dirent.h> // para o dir na função isdir
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <sys/types.h>
 # include <sys/wait.h>
 
 extern int	g_ex_status;
@@ -61,6 +67,7 @@ typedef struct s_shell
 	t_cmds			*cmds;
 	t_token			*head_token;
 	char			*cmd_line;
+	char			*tmpher;
 	int				i;
 	int				wd_lim;
 	int				dquotes;
@@ -76,6 +83,7 @@ typedef struct s_shell
 void	init(int ac, char **av, char **envp, t_shell *shell);
 char	*show_prompt(t_shell *sh);
 void	signals(void);
+void	signal_handler(int sig);
 int		operators(t_shell *sh);
 
 /*Builtins*/
@@ -88,6 +96,7 @@ int		built_exit(t_cmds *cmds);
 int		built_env(t_shell *shell);
 int		built_export(t_shell *shell, t_cmds *cmds);
 int		built_unset(t_cmds *cmds, t_shell *shell);
+void	clear_screen(void);
 
 /*Env*/
 int		put_var_env(char *var, char *value, t_shell *shell);
@@ -181,8 +190,16 @@ void	childprocess(t_cmds *cmd, int *fd);
 /*redirects*/
 char	*dirpath(t_shell *sh);
 char	*fullpath(char *path, t_token *token);
-int		parse_redirecs(t_cmds *node, t_token *token);
+int		parse_redirecs(t_shell *sh, t_cmds *node, t_token *token);
+int		redheredoc(t_cmds *node, char *delimeter);
+int		checkheredoc(t_shell *sh, t_cmds *node, char *delimeter);
+void	rmvaspashe(char *str);
+int		redheredocex(t_shell *sh, t_cmds *node, char *delimeter);
+char	*her_env(t_shell *sh, char *str);
+char	*dorexpher(int *i, char *str, t_shell *sh);
 int		filein(t_cmds *node, t_token *token);
 int		fileout(t_cmds *node, t_token *token);
+void	handle_default(t_cmds *node, int fd[2]);
+int		heredocfdex(t_cmds *node, char *str);
 
 #endif

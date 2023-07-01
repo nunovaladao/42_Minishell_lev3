@@ -43,13 +43,13 @@ static int	checkredirectionoperators(t_token *start)
 		}
 		if (start->next->type == 'O')
 		{
-			g_ex_status = 2;
 			printf("minishell: syntax error near unexpected token '%s'\n", \
 			start->word);
-			return (1);
+			return (g_ex_status = 2);
 		}
 	}
-	else if (start->prev == NULL && ft_strcmp(start->word, "<<") == 0)
+	else if ((start->prev == NULL || start->next == NULL) \
+	&& ft_strcmp(start->word, "<<") == 0)
 	{
 		g_ex_status = 2;
 		printf("minishell: syntax error near unexpected token '%s'\n", \
@@ -69,9 +69,9 @@ int	operators(t_shell *sh)
 	{
 		if (start->type == 'O')
 		{
-			if (checkpipeoperator(start) == 1)
+			if (checkpipeoperator(start))
 				return (1);
-			else if (checkredirectionoperators(start) == 1)
+			else if (checkredirectionoperators(start))
 				return (1);
 		}
 		start = start->next;

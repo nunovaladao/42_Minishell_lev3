@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmoreira <nmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:18:20 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/06/27 21:23:02 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/07/01 19:10:55 by nmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-bool	valid_identifier(char *var)
+static bool	valid_identifier(char *var)
 {
 	int	i;
 
@@ -30,7 +30,7 @@ bool	valid_identifier(char *var)
 	return (true);
 }
 
-int	error_export(t_shell *shell, char *var)
+static int	error_export(t_shell *shell, char *var)
 {
 	if (!pos_char(var, '=') || valid_identifier(var) == false)
 	{
@@ -43,7 +43,7 @@ int	error_export(t_shell *shell, char *var)
 	return (g_ex_status = 0);
 }
 
-void	print_export(t_shell *shell)
+static void	print_export(t_shell *shell)
 {
 	char	*env_value;
 	char	**env;
@@ -68,7 +68,7 @@ void	print_export(t_shell *shell)
 	}
 }
 
-int	put_var_and_values(t_cmds *cmds, t_shell *shell)
+static int	put_var_and_values(t_cmds *cmds, t_shell *shell)
 {
 	int	i;
 

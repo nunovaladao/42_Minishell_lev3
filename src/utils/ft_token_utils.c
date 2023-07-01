@@ -31,9 +31,7 @@ void	print_list(t_shell *sh)
 	if (!sh->head_token)
 		return ;
 	while (current != NULL)
-	{
 		current = current->next;
-	}
 }
 
 void	*node(t_shell *sh, char *word)
