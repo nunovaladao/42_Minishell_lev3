@@ -46,6 +46,7 @@ void	ft_wait(t_shell *sh)
 	}
 	if (g_ex_status > 255)
 		g_ex_status = g_ex_status / 255;
+	printf("processos %d\n", sh->proc);
 }
 
 int	main(int ac, char **av, char **envp)

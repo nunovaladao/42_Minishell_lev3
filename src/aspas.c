@@ -14,6 +14,7 @@
 
 extern int	g_ex_status;
 
+/*alteração no while mais interno coloquei a detecção str[i] != '\0'*/
 int	countaspas(char *str)
 {
 	char	c;
@@ -24,16 +25,18 @@ int	countaspas(char *str)
 	pairs = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == 34 || str[i] == 39)
+		if (str[i] == '\"' || str[i] == '\'')
 		{
 			c = str[i];
+			printf("c no par %c\n", str[i]);
 			i++;
 			pairs++;
-			while (str[i] != c)
+			while (str[i] != c && str[i] != '\0')
 				i++;
 		}
 		i++;
 	}
+	printf("par %d\n", pairs);
 	return (pairs);
 }
 
@@ -66,6 +69,7 @@ void	wordoutaspas(t_token *node)
 	node->word = str;
 }
 
+/*alteração no if dentro while devido ao heredoc*/
 int	rmvaspas(t_shell *sh)
 {
 	t_token	*node;
@@ -74,7 +78,9 @@ int	rmvaspas(t_shell *sh)
 	node = sh->head_token;
 	while (node)
 	{
-		if (!ft_strchr(node->word, '$'))
+		if ((node->prev) && ft_strcmp(node->prev->word, "<<"))
+			return (0);
+		else if (!ft_strchr(node->word, '$'))
 			wordoutaspas(node);
 		node = node->next;
 	}

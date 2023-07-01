@@ -44,7 +44,7 @@ static void	initcicle2(char *str, t_datamini *data)
 		(data->i)++;
 }
 
-/* já considera o espaço no if, também faço return do ft itoa diretamente*/
+/* já considera o espaço no if*/
 char	*process_env_variable(char *str, t_datamini *d, t_shell *sh)
 {
 	char	*env;
@@ -52,8 +52,8 @@ char	*process_env_variable(char *str, t_datamini *d, t_shell *sh)
 
 	env = NULL;
 	var = NULL;
-	if (str[d->i] == '$' && (str[d->i + 1] == '\'' \
-	|| str[d->i + 1] == '$' || str[d->i + 1] == ' '))
+	if (str[d->i] == '$' && (str[d->i + 1] == '\'' || str[d->i + 1] == '$' \
+	|| str[d->i + 1] == ' '))
 	{
 		env = ft_strdup("$");
 		(d->i)++;

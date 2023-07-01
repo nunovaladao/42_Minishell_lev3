@@ -37,6 +37,7 @@ static char	*handle_double_quotes(t_shell *sh, char *temp)
 	env = NULL;
 	sh->dquotes = !sh->dquotes;
 	rest1 = get_rest1(sh, temp, start);
+	printf("rest1 dentro da handle %s\n", rest1);
 	env = checkenv(rest1, sh);
 	if (temp[sh->i] == '\"')
 	{

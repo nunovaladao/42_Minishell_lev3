@@ -21,8 +21,8 @@ int	end_varpos(char *s, int pos)
 	len = ft_strlen(s);
 	while (pos < len)
 	{
-		if (s[pos] == '$' || s[pos] == '\'' || s[pos] == '\"' \
-		|| s[pos - 1] == '?' || s[pos] == '\0')
+		if (s[pos] == '$' || s[pos] == '\'' \
+		|| s[pos] == '\"' || s[pos - 1] == '?' || s[pos] == '\0')
 			return (pos);
 		pos++;
 	}
@@ -34,12 +34,15 @@ static char	*ft_result(char *str, char *env)
 	char	*result;
 
 	result = NULL;
+	printf("env dentro do ft_result: %s\n", env);
+	printf("rest dentro do ft_result: %s\n", str);
 	if (str && env)
 		result = ft_strjoin(str, env);
 	else if (str)
 		result = ft_strdup(str);
 	else if (env)
 		result = ft_strdup(env);
+	printf("result dentro do ft_result: %s\n", result);
 	if (!result)
 		return (NULL);
 	else
@@ -60,6 +63,7 @@ char	*checkenv(char *str, t_shell *sh)
 	{
 		initcicle(str, &data);
 		data.rest = get_rest(str, data.start, data.i);
+		printf("rest checkenv %s\n", data.rest);
 		if (str[data.i] == '$' && str[data.i + 1] == '\0')
 		{
 			word = concate(word, ft_result(data.rest, "$"));
@@ -81,6 +85,7 @@ char	*restexp(t_shell *sh, char *temp)
 
 	left = NULL;
 	start = sh->i;
+	printf("char antes dquotes %c\n", temp[sh->i]);
 	while (temp[sh->i] != '\0' && temp[sh->i] != '$' && temp[sh->i] != '\"')
 	{
 		if (temp[sh->i] == '\'')

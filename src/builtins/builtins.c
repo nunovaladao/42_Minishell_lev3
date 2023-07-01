@@ -28,15 +28,14 @@ int	checkbuiltins(t_cmds *cmd)
 		return (1);
 	else if (!ft_strcmp(cmd->cmd_line[0], "pwd"))
 		return (1);
-	else if (!ft_strcmp(cmd->cmd_line[0], "export"))
+	if (!ft_strcmp(cmd->cmd_line[0], "export"))
 	{
 		if (cmd->cmd_line[1])
 			return (-1);
 		else
 			return (1);
 	}
-	else
-		return (0);
+	return (0);
 }
 
 int	builtins(t_cmds *cmds, t_shell *shell)
