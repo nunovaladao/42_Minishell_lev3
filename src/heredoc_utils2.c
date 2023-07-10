@@ -21,16 +21,24 @@ static char	*concateher(char *new_str, char *rest)
 	tmp = NULL;
 	if (new_str && rest)
 	{
-		tmp = ft_strdup(new_str);
+		tmp = ft_strjoin(new_str, rest);
 		free(new_str);
-		new_str = ft_strjoin(tmp, rest);
-		free(tmp);
+		free(rest);
+		return (tmp);
 	}
 	else if (new_str)
-		return (new_str);
+	{
+		tmp = ft_strdup(new_str);
+		free(new_str);
+		return (tmp);
+	}
 	else if (rest)
-		new_str = ft_strdup(rest);
-	return (new_str);
+	{
+		tmp = ft_strdup(rest);
+		free(rest);
+		return (tmp);
+	}
+	return (NULL);
 }
 
 static char	*dorest(int *i, char *str)
@@ -41,7 +49,7 @@ static char	*dorest(int *i, char *str)
 	start = *i;
 	rest = NULL;
 	while (str[(*i)] != '$' && str[(*i)] != '\0')
-			(*i)++;
+		(*i)++;
 	if ((*i) > start)
 	{
 		rest = ft_substr(str, start, (*i) - start);
@@ -63,9 +71,17 @@ static char	*concatenate_strings(char *str1, char *str2)
 		return (result);
 	}
 	else if (str1)
-		return (ft_strdup(str1));
+	{
+		result = ft_strdup(str1);
+		free(str1);
+		return (result);
+	}
 	else if (str2)
-		return (ft_strdup(str2));
+	{
+		result = ft_strdup(str2);
+		free(str2);
+		return (result);
+	}
 	else
 		return (NULL);
 }
@@ -89,26 +105,18 @@ char	*getenvher(t_shell *sh, char *str)
 		env = dorexpher(&i, str, sh);
 		result = concatenate_strings(rest, env);
 		new_str = concateher(new_str, result);
-		if (result)
-			free(result);
 	}
 	return (new_str);
 }
 
 char	*her_env(t_shell *sh, char *str)
 {
-	char	*tmp;
 	char	*tmp1;
 
-	tmp = NULL;
 	tmp1 = NULL;
 	if (!str)
 		return (NULL);
 	if (ft_strchr(str, '$'))
-	{
-		tmp = ft_strdup(str);
-		tmp1 = getenvher(sh, tmp);
-		free(tmp);
-	}
+		tmp1 = getenvher(sh, str);
 	return (tmp1);
 }

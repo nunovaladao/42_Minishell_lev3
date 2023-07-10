@@ -22,7 +22,6 @@ int	pos_envp(char *var, char **envp)
 	if (!envp || !*envp)
 		return (-1);
 	len = ft_strlen(var);
-	printf("len getenv %d\n", len);
 	i = -1;
 	while (envp[++i])
 	{
@@ -39,9 +38,7 @@ char	*get_env(char *var, t_shell *sh)
 {
 	int		pos;
 
-	printf("var getenv %s\n", var);
 	pos = pos_envp(var, sh->envp);
-	printf("pos getenv %d\n", pos);
 	if (pos < 0 || !ft_strchr(sh->envp[pos], '='))
 		return (NULL);
 	return (ft_strdup(sh->envp[pos] + (ft_strlen(var) + 1)));

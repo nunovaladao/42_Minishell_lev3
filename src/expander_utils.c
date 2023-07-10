@@ -14,96 +14,90 @@
 
 extern int	g_ex_status;
 
-int	end_varpos(char *s, int pos)
-{
-	int		len;
-
-	len = ft_strlen(s);
-	while (pos < len)
-	{
-		if (s[pos] == '$' || s[pos] == '\'' \
-		|| s[pos] == '\"' || s[pos - 1] == '?' || s[pos] == '\0')
-			return (pos);
-		pos++;
-	}
-	return (len);
-}
-
-static char	*ft_result(char *str, char *env)
+char	*ft_result(char *str, char *env)
 {
 	char	*result;
 
 	result = NULL;
-	printf("env dentro do ft_result: %s\n", env);
-	printf("rest dentro do ft_result: %s\n", str);
 	if (str && env)
+	{
 		result = ft_strjoin(str, env);
+		free(str);
+		free(env);
+	}
 	else if (str)
+	{
 		result = ft_strdup(str);
+		free(str);
+	}
 	else if (env)
+	{
 		result = ft_strdup(env);
-	printf("result dentro do ft_result: %s\n", result);
+		free(env);
+	}
 	if (!result)
 		return (NULL);
 	else
 		return (result);
 }
 
-/* tive que retirar free(&data) no if e no fim por naõ ser endereço heap*/
-char	*checkenv(char *str, t_shell *sh)
+static char	*extract_quotes(char *temp, t_shell *sh, int start)
 {
-	char		*word;
-	t_datamini	data;
+	char	*before;
+	char	*quotes;
+	char	*result;
 
-	if (!str)
-		return (NULL);
-	initdatamini(&data);
-	word = NULL;
-	while (str[data.i] != '\0')
-	{
-		initcicle(str, &data);
-		data.rest = get_rest(str, data.start, data.i);
-		printf("rest checkenv %s\n", data.rest);
-		if (str[data.i] == '$' && str[data.i + 1] == '\0')
-		{
-			word = concate(word, ft_result(data.rest, "$"));
-			free(data.rest);
-			return (word);
-		}
-		data.env = process_env_variable(str, &data, sh);
-		word = concate(word, ft_result(data.rest, data.env));
-		free(data.env);
-		free(data.rest);
-	}
-	return (word);
+	before = NULL;
+	quotes = NULL;
+	result = NULL;
+	if (sh->i > start)
+		before = ft_substr(temp, start, sh->i - start);
+	sh->i++;
+	start = sh->i;
+	while (temp[sh->i] != '\'')
+		sh->i++;
+	sh->i++;
+	if (sh->i > start)
+		quotes = ft_substr(temp, start, sh->i - start - 1);
+	result = ft_result(before, quotes);
+	return (result);
+}
+
+static char	*extract_left(char *temp, t_shell *sh, int start)
+{
+	char	*left;
+
+	left = NULL;
+	if (sh->i > start)
+		left = ft_substr(temp, start, sh->i - start);
+	return (left);
 }
 
 char	*restexp(t_shell *sh, char *temp)
 {
 	char	*left;
+	char	*result;
+	char	*final;
 	int		start;
 
 	left = NULL;
+	result = NULL;
+	final = NULL;
 	start = sh->i;
-	printf("char antes dquotes %c\n", temp[sh->i]);
 	while (temp[sh->i] != '\0' && temp[sh->i] != '$' && temp[sh->i] != '\"')
 	{
 		if (temp[sh->i] == '\'')
 		{
-			sh->i++;
-			while (temp[sh->i] != '\'')
-				sh->i++;
-			sh->i++;
+			result = extract_quotes(temp, sh, start);
+			start = sh->i;
 		}
 		else
 			sh->i++;
 	}
 	if (sh->i > start)
-	{
-		left = ft_substr(temp, start, sh->i - start);
-		return (left);
-	}	
-	return (NULL);
+		left = extract_left(temp, sh, start);
+	final = ft_result(result, left);
+	return (final);
 }
 
 char	*allword(t_shell *sh, char *temp)

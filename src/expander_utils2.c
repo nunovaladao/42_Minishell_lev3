@@ -22,7 +22,6 @@ static char	*get_environment_variable(const char *str, t_datamini *data)
 	var = NULL;
 	end = data->i;
 	var = ft_substr(str, data->start, end - data->start);
-	printf("var dentro da get %s\n", var);
 	data->i = end;
 	return (var);
 }
@@ -45,13 +44,30 @@ static void	initcicle2(char *str, t_datamini *data)
 }
 
 /* já considera o espaço no if*/
-char	*process_env_variable(char *str, t_datamini *d, t_shell *sh)
+
+static char	*process_variable(char *str, t_datamini *d, t_shell *sh)
 {
 	char	*env;
 	char	*var;
+	char	*var1;
 
 	env = NULL;
 	var = NULL;
+	var1 = NULL;
+	initcicle2(str, d);
+	var1 = get_environment_variable(str, d);
+	var = ft_strdup(var1);
+	env = get_env_value(str, var, d, sh);
+	free(var1);
+	free(var);
+	return (env);
+}
+
+char	*process_env_variable(char *str, t_datamini *d, t_shell *sh)
+{
+	char	*env;
+
+	env = NULL;
 	if (str[d->i] == '$' && (str[d->i + 1] == '\'' || str[d->i + 1] == '$' \
 	|| str[d->i + 1] == ' '))
 	{
@@ -61,15 +77,9 @@ char	*process_env_variable(char *str, t_datamini *d, t_shell *sh)
 	else if (str[d->i] == '$' && str[d->i + 1] == '?')
 	{
 		(d->i) += 2;
-		free(var);
 		return (ft_itoa(g_ex_status));
 	}
 	else if (str[d->i] == '$')
-	{
-		initcicle2(str, d);
-		var = ft_strdup(get_environment_variable(str, d));
-		env = get_env_value(str, var, d, sh);
-		free(var);
-	}
+		env = process_variable(str, d, sh);
 	return (env);
 }

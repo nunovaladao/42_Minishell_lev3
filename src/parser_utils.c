@@ -75,7 +75,6 @@ void	*node_cmds(t_cmds **node)
 
 	new = NULL;
 	new = (t_cmds *)malloc(sizeof(t_cmds));
-	printf("dentro do parser node_cmd %p\n", new);
 	if (!new)
 		return (NULL);
 	new->next = NULL;

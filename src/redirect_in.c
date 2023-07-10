@@ -18,7 +18,6 @@ int	check_file_access(t_cmds *node, t_token *token)
 {
 	if (access(token->word, F_OK) == 0)
 	{
-		printf("valor de acess no redirin %d\n", access(token->word, F_OK));
 		if (access(token->word, R_OK) == 0)
 		{
 			node->infd = open(token->word, O_RDONLY, 0644);
