@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nuno <nuno@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 14:07:46 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/06/27 21:18:32 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/07/10 20:06:03 by nuno             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static	int	cd_back(t_shell *shell, t_cmds *cmds)
 	put_var_env("PWD", cmds->pwd, shell);
 	put_var_env("OLDPWD", cmds->oldpwd, shell);
 	printf("%s\n", cmds->pwd);
+	free(tmp);
 	return (g_ex_status = 0);
 }
 
@@ -45,11 +46,13 @@ static	int	get_cd_home(t_shell *shell, t_cmds *cmds)
 	if (!go_home)
 	{
 		printf("minishell: cd: HOME not set\n");
+		free(go_home);
 		return (g_ex_status = 1);
 	}
 	cmds->oldpwd = getcwd(NULL, 0);
 	chdir(go_home);
 	put_var_env("OLDPWD", cmds->oldpwd, shell);
+	free(go_home);
 	return (g_ex_status = 0);
 }
 

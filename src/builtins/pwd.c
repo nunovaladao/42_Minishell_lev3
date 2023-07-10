@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nuno <nuno@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:27:42 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/06/27 21:21:10 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/07/10 18:10:16 by nuno             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 int	built_pwd(void)
 {
-	printf("%s\n", getcwd(NULL, 0));
+	char *pwd;
+	
+	pwd = getcwd(NULL, 0);
+	if (pwd)
+	{
+		printf("%s\n", pwd);
+		free(pwd);	
+	}
 	return (g_ex_status = 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nuno <nuno@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:09:38 by nmoreira          #+#    #+#             */
-/*   Updated: 2023/05/17 13:26:05 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/07/10 20:12:29 by nuno             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,12 @@ char	*get_env(char *var, t_shell *sh)
 int	put_var_env(char *var, char *value, t_shell *shell)
 {
 	int		pos;
+	char	*aux;
+	char	*aux1;
 
+	aux = ft_strjoin(var, "=");
+	aux1 = ft_strjoin(aux, value);
+	free(aux);
 	pos = pos_envp(var, shell->envp);
 	if (value == NULL)
 	{
@@ -56,13 +61,14 @@ int	put_var_env(char *var, char *value, t_shell *shell)
 		return (0);
 	}
 	if (pos < 0)
-		shell->envp = mtr_addnew(ft_strjoin(var, \
-		ft_strjoin("=", value)), shell->envp);
-	else
 	{
-		free(shell->envp[pos]);
-		shell->envp[pos] = ft_strjoin(var, ft_strjoin("=", value));
+		shell->envp = mtr_addnew(aux1, shell->envp);
+		free(aux1);
+		return (0);
 	}
+	aux = shell->envp[pos];
+	shell->envp[pos] = aux1;
+	free(aux);
 	return (0);
 }
 
