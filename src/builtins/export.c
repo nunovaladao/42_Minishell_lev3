@@ -6,7 +6,7 @@
 /*   By: nmoreira <nmoreira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:18:20 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/07/01 19:10:55 by nmoreira         ###   ########.fr       */
+/*   Updated: 2023/07/05 15:22:28 by nmoreira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static int	error_export(t_shell *shell, char *var)
 	return (g_ex_status = 0);
 }
 
+/*foi libertado no fim a matriz env*/
 static void	print_export(t_shell *shell)
 {
 	char	*env_value;
@@ -66,6 +67,7 @@ static void	print_export(t_shell *shell)
 		}
 		printf("\n");
 	}
+	mtr_free(env);
 }
 
 static int	put_var_and_values(t_cmds *cmds, t_shell *shell)

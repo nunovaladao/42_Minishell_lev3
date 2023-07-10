@@ -18,7 +18,7 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <dirent.h> // para o dir na função isdir
+# include <dirent.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -35,6 +35,7 @@ typedef struct s_datamini
 	int			start;
 	char		*rest;
 	char		*env;
+	char		*conc;
 }	t_datamini;
 
 typedef struct s_token
@@ -67,7 +68,6 @@ typedef struct s_shell
 	t_cmds			*cmds;
 	t_token			*head_token;
 	char			*cmd_line;
-	char			*tmpher;
 	int				i;
 	int				wd_lim;
 	int				dquotes;
@@ -162,6 +162,7 @@ void	initcicle(char *str, t_datamini *data);
 void	initdatamini(t_datamini *data);
 char	*get_rest(const char *str, int start, int end);
 char	*process_env_variable(char *str, t_datamini *data, t_shell *sh);
+char	*ft_result(char *str, char *env);
 
 /*parser*/
 void	*node_cmds(t_cmds **node);
@@ -201,5 +202,6 @@ int		filein(t_cmds *node, t_token *token);
 int		fileout(t_cmds *node, t_token *token);
 void	handle_default(t_cmds *node, int fd[2]);
 int		heredocfdex(t_cmds *node, char *str);
+void	setup_signal_handlers(void);
 
 #endif

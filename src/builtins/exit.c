@@ -34,7 +34,7 @@ int	built_exit(t_cmds *cmds)
 	int	exit_status;
 
 	nb_args = nb_of_args(cmds);
-	if (args_numbers(cmds->cmd_line[1]) == 1)
+	if (nb_args > 1 && args_numbers(cmds->cmd_line[1]) == 1)
 	{
 		printf("exit\n");
 		printf("bash: exit: %s: numeric argument required\n", cmds->cmd_line[1]);

@@ -31,7 +31,10 @@ void	print_list(t_shell *sh)
 	if (!sh->head_token)
 		return ;
 	while (current != NULL)
+	{
+		printf("Word:%s, Type: %c\n", current->word, current->type);
 		current = current->next;
+	}
 }
 
 void	*node(t_shell *sh, char *word)
@@ -69,6 +72,7 @@ void	token_node(t_shell *sh, char c)
 	{
 		str = ft_substr(sh->cmd_line, sh->wd_lim, (sh->i - sh->wd_lim));
 		node(sh, str);
+		free(str);
 	}
 	sh->wd_lim = sh->i;
 	if (c != 'N')
