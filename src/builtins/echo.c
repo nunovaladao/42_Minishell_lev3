@@ -3,38 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nuno <nuno@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:57:50 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/06/27 21:25:32 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/07/11 09:23:46 by nuno             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+int	valid_n(char *str)
+{
+	int	i;
+
+	i = 2;
+	if (str && ft_strncmp(str, "-n", 2) == 0)
+	{
+		while (str[i])
+		{
+			if (str[i] != 'n')
+				break ;
+			i++;
+		}
+		return (1);
+	}
+	return (0);
+}
+
 int	built_echo(t_cmds *cmds)
 {
 	int	i;
-	int	n_flag;
-
-	n_flag = 0;
+	
 	i = 1;
-	while (cmds->cmd_line[i] != NULL && ft_strcmp(cmds->cmd_line[i], "-n") == 0)
-	{
-		n_flag = 1;
+	while (valid_n(cmds->cmd_line[i]) && cmds->cmd_line[i])
 		i++;
-	}
-	if (cmds->cmd_line[i] != NULL)
+	while (cmds->cmd_line[i])
 	{
-		printf("%s", cmds->cmd_line[i]);
-		i++;
+		printf("%s", cmds->cmd_line[i++]);
+		if (cmds->cmd_line[i])
+			printf(" ");
 	}
-	while (cmds->cmd_line[i] != NULL)
-	{
-		printf(" %s", cmds->cmd_line[i]);
-		i++;
-	}
-	if (n_flag == 0)
+	if (!valid_n(cmds->cmd_line[1]))
 		printf("\n");
 	return (g_ex_status = 0);
 }
