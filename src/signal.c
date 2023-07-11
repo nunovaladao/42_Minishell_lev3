@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nuno <nuno@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 22:31:20 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/07/11 11:12:55 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/07/11 18:09:11 by nuno             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	signal_quit(int sig)
 {
 	if (sig == SIGQUIT)
 	{
-		printf("Quit: (core dumped)\n");
-		kill(0, SIGINT);
 		g_ex_status = 131;
+		ft_putstr_fd("Quit: (core dumped)", STDERR_FILENO);
+		kill(0, SIGINT);	
 	}
 }
 

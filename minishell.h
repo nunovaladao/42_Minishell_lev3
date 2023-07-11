@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nuno <nuno@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:12:18 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/07/11 10:33:54 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/07/11 13:53:31 by nuno             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,5 +204,6 @@ void	handle_default(t_cmds *node, int fd[2]);
 int		heredocfdex(t_cmds *node, char *str);
 void	setup_signal_handlers(void);
 void	signal_quit(int sig);
+void	signal_handler_two(int sig);
 
 #endif
