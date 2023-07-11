@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmoreira <nmoreira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 18:54:21 by nmoreira          #+#    #+#             */
-/*   Updated: 2023/06/03 18:54:21 by nmoreira         ###   ########.fr       */
+/*   Updated: 2023/07/11 10:33:35 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	execcmd(t_shell *sh)
 		else if (cmd->cmd_line && cmd->infd != -2 && cmd->outfd != -2)
 		{
 			signal(SIGINT, SIG_IGN);
-			signal(SIGQUIT, SIG_IGN);
+			signal(SIGQUIT, signal_quit);
 			cmd->path = search_path(sh, cmd);
 			if (pipe(fd) == -1)
 			{

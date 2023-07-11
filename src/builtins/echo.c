@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nuno <nuno@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:57:50 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/07/11 09:23:46 by nuno             ###   ########.fr       */
+/*   Updated: 2023/07/11 09:35:22 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	valid_n(char *str)
 int	built_echo(t_cmds *cmds)
 {
 	int	i;
-	
+
 	i = 1;
 	while (valid_n(cmds->cmd_line[i]) && cmds->cmd_line[i])
 		i++;
