@@ -35,10 +35,11 @@ static char	*handle_double_quotes(t_shell *sh, char *temp)
 	sh->i++;
 	start = sh->i;
 	env = NULL;
+	rest1 = NULL;
 	sh->dquotes = !sh->dquotes;
 	rest1 = get_rest1(sh, temp, start);
-	printf("rest1 dentro da handle %s\n", rest1);
 	env = checkenv(rest1, sh);
+	free(rest1);
 	if (temp[sh->i] == '\"')
 	{
 		sh->dquotes = !sh->dquotes;

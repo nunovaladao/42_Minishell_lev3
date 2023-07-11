@@ -28,7 +28,6 @@ int	countaspas(char *str)
 		if (str[i] == '\"' || str[i] == '\'')
 		{
 			c = str[i];
-			printf("c no par %c\n", str[i]);
 			i++;
 			pairs++;
 			while (str[i] != c && str[i] != '\0')
@@ -36,7 +35,6 @@ int	countaspas(char *str)
 		}
 		i++;
 	}
-	printf("par %d\n", pairs);
 	return (pairs);
 }
 
@@ -57,19 +55,19 @@ void	wordoutaspas(t_token *node)
 		{
 			c = node->word[i];
 			i++;
-			while (node->word[i] != c)
+			while (node->word[i] && node->word[i] != c)
 				str[j++] = node->word[i++];
 			i++;
 		}
 		else
 			str[j++] = node->word[i++];
 	}
-	free(node->word);
 	str[j] = '\0';
+	free(node->word);
 	node->word = str;
 }
 
-/*alteração no if dentro while devido ao heredoc*/
+/*alter no if no while devido ao heredoc este está corret retirado o else if*/
 int	rmvaspas(t_shell *sh)
 {
 	t_token	*node;
@@ -78,9 +76,10 @@ int	rmvaspas(t_shell *sh)
 	node = sh->head_token;
 	while (node)
 	{
-		if ((node->prev) && ft_strcmp(node->prev->word, "<<"))
+		if ((node->prev) && node->prev->word \
+		&& !ft_strcmp(node->prev->word, "<<"))
 			return (0);
-		else if (!ft_strchr(node->word, '$'))
+		if (node->word && !ft_strchr(node->word, '$'))
 			wordoutaspas(node);
 		node = node->next;
 	}

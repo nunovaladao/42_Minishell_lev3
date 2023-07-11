@@ -52,28 +52,16 @@ static char	*heredoc_nstr(char *str, char *buffer)
 	return (str);
 }
 
-void	rmvaspashe(char *str)
+static char	*handle_buffer(char *str, char *buffer, char *delimeter)
 {
-	int		i;
-	int		j;
-	char	c;
+	char	*new_str;
 
-	i = 0;
-	j = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			c = str[i];
-			i++;
-			while (str[i] != c)
-				str[j++] = str[i++];
-			i++;
-		}
-		else
-			str[j++] = str[i++];
-	}
-	str[j] = '\0';
+	new_str = NULL;
+	if (str && ft_strcmp(buffer, delimeter) != 0)
+		new_str = heredoc_nstr(str, buffer);
+	else if (ft_strcmp(buffer, delimeter) != 0)
+		new_str = ft_strdup(buffer);
+	return (new_str);
 }
 
 int	redheredoc(t_cmds *node, char *delimeter)
@@ -86,20 +74,20 @@ int	redheredoc(t_cmds *node, char *delimeter)
 	rmvaspashe(delimeter);
 	while (1)
 	{
-		signal(SIGINT, SIG_IGN);
-		signal(SIGQUIT, SIG_IGN);
+		setup_signal_handlers();
 		buffer = readline("> ");
 		if (!buffer)
+		{
+			write(1, "\n", 1);
+			free(str);
 			return (node->infd = -2);
-		if (str && ft_strcmp(buffer, delimeter) != 0)
-			str = heredoc_nstr(str, buffer);
-		else if (ft_strcmp(buffer, delimeter) != 0)
-			str = ft_strdup(buffer);
+		}
 		if (ft_strcmp(buffer, delimeter) == 0)
 		{
 			free(buffer);
 			return (heredocfd(node, str));
 		}
+		str = handle_buffer(str, buffer, delimeter);
 		free(buffer);
 	}
 	return (1);

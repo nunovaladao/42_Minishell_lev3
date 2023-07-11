@@ -27,6 +27,7 @@ void	initdatamini(t_datamini *data)
 	data->start = 0;
 	data->rest = NULL;
 	data->env = NULL;
+	data->conc = NULL;
 }
 
 void	initcicle(char *str, t_datamini *data)

@@ -55,6 +55,8 @@ void	makefork(t_shell *sh, t_cmds *cmd, int *fd)
 			execve(cmd->path, cmd->cmd_line, sh->envp);
 		else if (checkbuiltins(cmd) > 0)
 			builtins(cmd, sh);
+		free(sh->cmd_line);
+		free_all(sh);
 		exit(g_ex_status);
 	}
 }
@@ -87,7 +89,7 @@ int	execcmd(t_shell *sh)
 		else if (cmd->cmd_line && cmd->infd != -2 && cmd->outfd != -2)
 		{
 			signal(SIGINT, SIG_IGN);
-			signal(SIGQUIT, SIG_IGN);
+			signal(SIGQUIT, signal_quit);
 			cmd->path = search_path(sh, cmd);
 			if (pipe(fd) == -1)
 			{
