@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmoreira <nmoreira@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 09:12:18 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/07/11 18:18:01 by nmoreira         ###   ########.fr       */
+/*   Updated: 2023/07/12 15:25:58 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ char	*show_prompt(t_shell *sh);
 void	signals(void);
 void	signal_handler(int sig);
 int		operators(t_shell *sh);
+void	signal_quit2(int sig);
 
 /*Builtins*/
 int		builtins(t_cmds *cmds, t_shell *shell);

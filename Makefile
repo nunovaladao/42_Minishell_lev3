@@ -6,14 +6,14 @@
 #    By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/27 17:52:53 by nsoares-          #+#    #+#              #
-#    Updated: 2023/05/10 21:00:38 by nsoares-         ###   ########.fr        #
+#    Updated: 2023/07/12 17:28:09 by nsoares-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 LIBFT = ./libft/libft.a
 RM = rm -rf
 
@@ -86,8 +86,8 @@ fclean: clean
 re:	fclean all
 	@ $(RE)
 
-# noleaks: re
-# 	valgrind ./minishell
+#  noleaks: re
+ 	# valgrind --track-fds=yes././minishell
 
 # noleaksfull: re
 # 	valgrind --leak-check=full --show-leak-kinds=all -s ./minishell

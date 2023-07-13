@@ -32,7 +32,12 @@ void	ft_wait(t_shell *sh)
 	if (waitpid(sh->pid, &wstatus, 0) != -1)
 	{
 		if (WIFSIGNALED(wstatus))
-			wstatus += 128;
+		{
+			if (wstatus == 131)
+				g_ex_status = wstatus;
+			else
+				wstatus += 128;
+		}
 		if (sh->fork)
 			g_ex_status = wstatus;
 		if (g_ex_status == 130)
@@ -41,7 +46,7 @@ void	ft_wait(t_shell *sh)
 	}
 	while (sh->proc)
 	{
-		signal(SIGINT, signal_quit1);
+		signal(SIGQUIT, signal_quit);
 		wait(0);
 		sh->proc--;
 	}

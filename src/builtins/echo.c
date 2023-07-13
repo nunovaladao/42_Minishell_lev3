@@ -6,11 +6,13 @@
 /*   By: nsoares- <nsoares-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:57:50 by nsoares-          #+#    #+#             */
-/*   Updated: 2023/07/11 09:35:22 by nsoares-         ###   ########.fr       */
+/*   Updated: 2023/07/12 17:41:51 by nsoares-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+extern int	g_ex_status;
 
 int	valid_n(char *str)
 {
@@ -22,7 +24,7 @@ int	valid_n(char *str)
 		while (str[i])
 		{
 			if (str[i] != 'n')
-				break ;
+				return (0);
 			i++;
 		}
 		return (1);
